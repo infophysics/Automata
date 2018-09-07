@@ -470,12 +470,50 @@ void Automata::initializeCells(float density){
 }
 
 //	generators
-std::vector <std::vector <std::vector <int> > > Automata::generateSequence(){
+std::vector <std::vector <int> > Automata::generateSequence(){
 	//	check for necessary conditions
-
+	std::vector <std::vector <int> > sequence;
+	for (int i = 0; i < m_Time; i++){
+		std::vector <int> tempCells;
+		for (int j = 0; j < m_Size; j++){
+			tempCells.push_back(m_Cells[j].m_State);
+		}
+		sequence.push_back(tempCells);
+		updateOneDimensionalCells();
+	}
+	return sequence;
 }
 
+std::vector <std::vector <int> > Automata::generateSequence(int time){
+	m_Time = time;
+	//	check for necessary conditions
+	std::vector <std::vector <int> > sequence;
+	for (int i = 0; i < m_Time; i++){
+		std::vector <int> tempCells;
+		for (int j = 0; j < m_Size; j++){
+			tempCells.push_back(m_Cells[j].m_State);
+		}
+		sequence.push_back(tempCells);
+		updateOneDimensionalCells();
+	}
+	return sequence;
+}
 
+//	save sequence to file
+void Automata::saveSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName){
+	std::ofstream myfile;
+	myfile.open(fileName);
+	for (int i = 0; i < sequence.size(); i++){
+		for (int j = 0; j < m_Size; j++){
+			myfile << sequence[i][j];
+			if (j != m_Size - 1){
+				myfile << ",";
+			}
+		}
+		myfile << "\n";
+	}
+	myfile.close();
+}
 
 
 
@@ -485,15 +523,17 @@ int main(){
 
 	//	initial state
 	std::vector<int> initialState;
-	for (int i = 0; i < 51; i++){
+	for (int i = 0; i < 101; i++){
 		initialState.push_back(0);
 	}
-	initialState[25] = 1;
+	initialState[50] = 1;
 
-	Automata test(1, 51, 0, 18, .4, 50);
+	Automata test(1, 101, 0, 18, .4, 500);
 	test.setCells(initialState);
 	//test.printCells();
 	test.displayOneDimensionalCells();
+	std::vector <std::vector <int> > sequence = test.generateSequence();
+	test.saveSequenceToFile(sequence, "test.csv");
 	for (int i = 0; i < 25; i++){
 		test.updateOneDimensionalCells();
 		test.displayOneDimensionalCells();

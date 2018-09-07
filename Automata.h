@@ -14,7 +14,9 @@
 #include <iostream>
 #include <random>
 #include <time.h>
+#include <string>
 #include <cstdlib>
+#include <fstream>
 
 //	Cell struct
 struct Cell{
@@ -69,10 +71,11 @@ class Automata {
 		void initializeCells(float density);
 
 		//	generators
-		std::vector <std::vector <std::vector <int> > > generateSequence();
-		std::vector <std::vector <std::vector <int> > > generateSequence(int time);
+		std::vector <std::vector <int> > generateSequence();
+		std::vector <std::vector <int> > generateSequence(int time);
 
-
+		//	save sequence to file
+		void saveSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName);
 
 
 	private:
