@@ -5,8 +5,7 @@
  *      Author: ncarrara
  */
 
-#ifndef AUTOMATA_H_
-#define AUTOMATA_H_
+#pragma once
 
 #include <vector>
 #include <stdio.h>
@@ -68,11 +67,11 @@ class Automata {
 		//	initializers
 		void initializeEmptyCells();
 		void initializeCells();
-		void initializeCells(float density);
+		//void initializeCells(float density);
 
 		//	generators
 		std::vector <std::vector <int> > generateSequence();
-		std::vector <std::vector <int> > generateSequence(int time);
+		//std::vector <std::vector <int> > generateSequence(int time);
 
 		//	save sequence to file
 		void saveSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName);
@@ -93,4 +92,4 @@ class Automata {
 
 };
 
-#endif /* AUTOMATA_H_ */
+

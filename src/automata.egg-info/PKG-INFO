@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: automata
+Version: 1.0
+Summary: Python bindings for 1D Cellular Automata
+Home-page: UNKNOWN
+Author: Nicholas Carrara
+Author-email: ncarrara@albany.edu
+License: UNKNOWN

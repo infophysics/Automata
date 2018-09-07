@@ -445,29 +445,29 @@ void Automata::initializeCells(){
 	}
 }
 //	initializer with density
-void Automata::initializeCells(float density){
-	findUpdateRule();
-	//	check for existence of type, size
-	if (m_Type == 0){
-		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
-		return;
-	}
-	else if (m_Size <= 0){
-		std::cout << "ERROR! Size of the space should be at least 1! : m_Size = " << m_Size << std::endl;
-	}
-	else{
-		if (m_Type == 1){
-			for (int i = 0; i < m_Size; i++){
-				if ((float)rand()/RAND_MAX <= density){
-					m_Cells[i].m_State = 1;
-				}
-				else{
-					m_Cells[i].m_State = 0;
-				}
-			}
-		}
-	}
-}
+//void Automata::initializeCells(float density){
+//	findUpdateRule();
+//	//	check for existence of type, size
+//	if (m_Type == 0){
+//		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
+//		return;
+//	}
+//	else if (m_Size <= 0){
+//		std::cout << "ERROR! Size of the space should be at least 1! : m_Size = " << m_Size << std::endl;
+//	}
+//	else{
+//		if (m_Type == 1){
+//			for (int i = 0; i < m_Size; i++){
+//				if ((float)rand()/RAND_MAX <= density){
+//					m_Cells[i].m_State = 1;
+//				}
+//				else{
+//					m_Cells[i].m_State = 0;
+//				}
+//			}
+//		}
+//	}
+//}
 
 //	generators
 std::vector <std::vector <int> > Automata::generateSequence(){
@@ -484,20 +484,20 @@ std::vector <std::vector <int> > Automata::generateSequence(){
 	return sequence;
 }
 
-std::vector <std::vector <int> > Automata::generateSequence(int time){
-	m_Time = time;
-	//	check for necessary conditions
-	std::vector <std::vector <int> > sequence;
-	for (int i = 0; i < m_Time; i++){
-		std::vector <int> tempCells;
-		for (int j = 0; j < m_Size; j++){
-			tempCells.push_back(m_Cells[j].m_State);
-		}
-		sequence.push_back(tempCells);
-		updateOneDimensionalCells();
-	}
-	return sequence;
-}
+//std::vector <std::vector <int> > Automata::generateSequence(int time){
+//	m_Time = time;
+//	//	check for necessary conditions
+//	std::vector <std::vector <int> > sequence;
+//	for (int i = 0; i < m_Time; i++){
+//		std::vector <int> tempCells;
+//		for (int j = 0; j < m_Size; j++){
+//			tempCells.push_back(m_Cells[j].m_State);
+//		}
+//		sequence.push_back(tempCells);
+//		updateOneDimensionalCells();
+//	}
+//	return sequence;
+//}
 
 //	save sequence to file
 void Automata::saveSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName){
