@@ -1,6 +1,0 @@
-setup.py
-src/automata.egg-info/PKG-INFO
-src/automata.egg-info/SOURCES.txt
-src/automata.egg-info/dependency_links.txt
-src/automata.egg-info/not-zip-safe
-src/automata.egg-info/top_level.txt

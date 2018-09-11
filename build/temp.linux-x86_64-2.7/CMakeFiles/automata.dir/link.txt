@@ -1,1 +1,0 @@
-/usr/bin/c++  -fPIC  -std=c++11 -DVERSION_INFO=\"1.0\"  -O3 -DNDEBUG  -shared  -o ../lib.linux-x86_64-2.7/automata/automata.so CMakeFiles/automata.dir/src/Automata.cpp.o CMakeFiles/automata.dir/src/bindings.cpp.o -flto 
