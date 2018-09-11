@@ -8,7 +8,7 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(nestpy, m) {
+PYBIND11_MODULE(automata, m) {
   //	Binding for YieldResult struct
   py::class_<Cell>(m, "Cell", py::dynamic_attr())
 		.def(py::init<int>())
