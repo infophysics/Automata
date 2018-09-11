@@ -83,9 +83,6 @@ setup(
     test_suite='tests',
     zip_safe=False,
     include_package_data=True,
-    project_urls={
-        'git@github.com:infophysics/Automata.git'
-    },
     classifiers = [
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
