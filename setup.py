@@ -9,6 +9,7 @@ from distutils.version import LooseVersion
 from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext
 
+
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=''):
         Extension.__init__(self, name, sources=[])
@@ -21,8 +22,8 @@ class CMakeBuild(build_ext):
             out = subprocess.check_output(['cmake', '--version'])
         except OSError:
             raise RuntimeError(
-                     "CMake must be installed to build the following extensions: " +
-                      ", ".join(e.name for e in self.extensions))
+                "CMake must be installed to build the following extensions: " +
+                ", ".join(e.name for e in self.extensions))
 
         if platform.system() == "Windows":
             cmake_version = LooseVersion(re.search(r'version\s*([\d.]+)',
@@ -54,7 +55,7 @@ class CMakeBuild(build_ext):
             build_args += ['--', '-j2']
 
         env = os.environ.copy()
-        env['CXXFLAGS'] = '{} -std=c++11 -DVERSION_INFO=\\"{}\\"'.format(
+        env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
             env.get('CXXFLAGS', ''),
             self.distribution.get_version())
         if not os.path.exists(self.build_temp):
@@ -65,38 +66,16 @@ class CMakeBuild(build_ext):
                               cwd=self.build_temp)
         print()  # Add an empty line for cleaner output
 
-readme = open('README.md').read()
-history = open('HISTORY.md').read().replace('.. :changelog:', '')
-
 setup(
     name='automata',
-    version='1.0',
+    version='0.1',
     author='Nicholas Carrara',
     author_email='ncarrara@albany.edu',
-    description='Python bindings for 1D Cellular Automata',
-    long_description=readme + '\n\n' + history,
-    long_description_content_type="text/markdown",
+    description='1D cellular automata generator',
+    long_description='',
     packages=find_packages('src'),
     package_dir={'':'src'},
     ext_modules=[CMakeExtension('automata/automata')],
     cmdclass=dict(build_ext=CMakeBuild),
-    test_suite='tests',
     zip_safe=False,
-    include_package_data=True,
-    classifiers = [
-        'Development Status :: 4 - Beta',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: C++',
-        'Intended Audience :: Science/Research',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Topic :: Scientific/Engineering :: Physics',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: POSIX :: Linux'
-    ]
 )
