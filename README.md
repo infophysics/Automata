@@ -9,5 +9,6 @@ git clone https://github.com/infophysics/Automata.git
 Then, move to the new directory and install
 
 cd Automata
+
 sudo python3 setup.py install --user
 
