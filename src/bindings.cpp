@@ -38,18 +38,27 @@ PYBIND11_MODULE(automata, m) {
 	  .def("getTime", &Automata::getTime)
   	  //	state determination
   	  .def("findOneDimensionalState", &Automata::findOneDimensionalState)
-  	  //	updating cells
-  	  .def("findUpdateRule", &Automata::findUpdateRule)
+  	  .def("findTwoDimensionalvonNeumannState", &Automata::findTwoDimensionalvonNeumannState)
+	  //.def("findOneDimensionalState2", &Automata::findOneDimensionalState2)
+	  //.def("findTwoDimensionalvonNeumannState2", &Automata::findTwoDimensionalvonNeumannState2)
+	  //.def("findTwoDimensionalMooreState2", &Automata::findTwoDimensionalMooreState2)
+	  //	updating cells
+  	  .def("findOneDimensionalUpdateRule", &Automata::findOneDimensionalUpdateRule)
+	  //.def("findTwoDimensionalvonNeumannUpdateRule", &Automata::findTwoDimensionalvonNeumannUpdateRule)
+	  //.def("findTwoDimensionalvonNeumannUpdateRule2", &Automata::findTwoDimensionalvonNeumannUpdateRule2)
+	  //.def("findTwoDimensionalMooreUpdateRule2", &Automata::findTwoDimensionalMooreUpdateRule2)
 	  .def("updateOneDimensionalCells", &Automata::updateOneDimensionalCells)
+	  //.def("updateTwoDimensionalCells", &Automata::updateTwoDimensionalCells)
 	  //	printing
 	  .def("printCells", &Automata::printCells)
 	  .def("displayOneDimensionalCells", &Automata::displayOneDimensionalCells)
-  	  //	initializers
-  	  .def("initializeEmptyCells", &Automata::initializeEmptyCells)
-	  .def("initializeCells", &Automata::initializeCells)
+	  //.def("displayTwoDimensionalCells", &Automata::displayTwoDimensionalCells)  	  
+	  //	initializers
+  	  .def("initializeOneDimensionalEmptyCells", &Automata::initializeOneDimensionalEmptyCells)
+	  .def("initializeOneDimensionalCells", &Automata::initializeOneDimensionalCells)
 	  //.def("initializeCells", py::overload_cast<float>(&Automata::initializeCells))
   	  //	generators
-  	  .def("generateSequence", &Automata::generateSequence)
+  	  .def("generateOneDimensionalSequence", &Automata::generateOneDimensionalSequence)
   	  //	save sequence to file
   	  .def("saveSequenceToFile", &Automata::saveSequenceToFile)
 	  ;
