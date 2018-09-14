@@ -266,6 +266,123 @@ int Automata::findTwoDimensionalvonNeumannState(int cellX, int cellY){
 	return (tempState[0] + tempState[1]*2 + tempState[2]*4 + tempState[3]*8 + tempState[4]*16);
 }
 
+int Automata::findTwoDimensionalvonNeumannState2(int cellX, int cellY){
+	//	create temporary vector of five elements
+	int tempState[5];
+	tempState[0] = m_Cells[cellX][cellY].m_State;
+	//	check boundary conditions
+	if (cellX == 0){	// top of grid
+		if (cellY == 0){	// top left
+			if (m_Boundary == 1){
+				tempState[1] = m_Cells[m_Size-1][0].m_State;
+				tempState[2] = m_Cells[1][0].m_State;
+				tempState[3] = m_Cells[0][m_Size-1].m_State;
+				tempState[4] = m_Cells[0][1].m_State;
+			}
+			if (m_Boundary == 3){	//	Klein bottle
+				tempState[1] = m_Cells[m_Size-1][0].m_State;
+				tempState[2] = m_Cells[1][0].m_State;
+				tempState[3] = m_Cells[m_Size-1][m_Size-1].m_State;
+				tempState[4] = m_Cells[0][1].m_State;
+			}
+		}
+		else if (cellY == m_Size-1){	//	top right
+			if (m_Boundary == 1){
+				tempState[1] = m_Cells[m_Size-1][m_Size-1].m_State;
+				tempState[2] = m_Cells[1][m_Size-1].m_State;
+				tempState[3] = m_Cells[0][m_Size-2].m_State;
+				tempState[4] = m_Cells[0][0].m_State;
+			}
+			if (m_Boundary == 3){	//	Klein bottle
+				tempState[1] = m_Cells[m_Size-1][m_Size-1].m_State;
+				tempState[2] = m_Cells[1][m_Size-1].m_State;
+				tempState[3] = m_Cells[0][m_Size-2].m_State;
+				tempState[4] = m_Cells[m_Size-1][0].m_State;
+			}
+		}
+		else{	//	middle
+			tempState[1] = m_Cells[m_Size-1][cellY].m_State;
+			tempState[2] = m_Cells[cellX+1][cellY].m_State;
+			tempState[3] = m_Cells[cellX][cellY-1].m_State;
+			tempState[4] = m_Cells[cellX][cellY+1].m_State;
+		}
+	}
+	else if (cellX == m_Size - 1){	//	bottom of grid
+		if (cellY == 0){	// bottom left
+			if (m_Boundary == 1){
+				tempState[1] = m_Cells[m_Size-2][0].m_State;
+				tempState[2] = m_Cells[0][0].m_State;
+				tempState[3] = m_Cells[m_Size-1][m_Size-1].m_State;
+				tempState[4] = m_Cells[m_Size-1][1].m_State;
+			}
+			if (m_Boundary == 3){	//	Klein bottle
+				tempState[1] = m_Cells[m_Size-2][0].m_State;
+				tempState[2] = m_Cells[0][0].m_State;
+				tempState[3] = m_Cells[0][m_Size-1].m_State;
+				tempState[4] = m_Cells[m_Size-1][1].m_State;
+			}
+		}
+		else if (cellY == m_Size-1){	//	bottom right
+			if (m_Boundary == 1){
+				tempState[1] = m_Cells[m_Size-2][m_Size-1].m_State;
+				tempState[2] = m_Cells[0][m_Size-1].m_State;
+				tempState[3] = m_Cells[m_Size-2][m_Size-2].m_State;
+				tempState[4] = m_Cells[m_Size-1][0].m_State;
+			}
+			if (m_Boundary == 3){	//	Klein bottle
+				tempState[1] = m_Cells[m_Size-2][m_Size-1].m_State;
+				tempState[2] = m_Cells[0][m_Size-1].m_State;
+				tempState[3] = m_Cells[m_Size-2][m_Size-2].m_State;
+				tempState[4] = m_Cells[0][0].m_State;
+			}
+		}
+		else{	//	middle
+			tempState[1] = m_Cells[cellX-1][cellY].m_State;
+			tempState[2] = m_Cells[0][cellY].m_State;
+			tempState[3] = m_Cells[cellX][cellY-1].m_State;
+			tempState[4] = m_Cells[cellX][cellY+1].m_State;
+		}		
+	}
+	else{
+		if (cellY == 0){	// middle left
+			if (m_Boundary == 1){
+				tempState[1] = m_Cells[cellX-1][0].m_State;
+				tempState[2] = m_Cells[cellX+1][0].m_State;
+				tempState[3] = m_Cells[cellX][m_Size-1].m_State;
+				tempState[4] = m_Cells[cellX][1].m_State;
+			}
+			if (m_Boundary == 3){	//	Klein bottle
+				tempState[1] = m_Cells[cellX-1][0].m_State;
+				tempState[2] = m_Cells[cellX+1][0].m_State;
+				tempState[3] = m_Cells[m_Size-cellX][m_Size-1].m_State;
+				tempState[4] = m_Cells[cellX][1].m_State;
+			}
+		}
+		else if (cellY == m_Size-1){	//	middle right
+			if (m_Boundary == 1){
+				tempState[1] = m_Cells[cellX-1][m_Size-1].m_State;
+				tempState[2] = m_Cells[cellX+1][m_Size-1].m_State;
+				tempState[3] = m_Cells[cellX][cellY-1].m_State;
+				tempState[4] = m_Cells[cellX][0].m_State;
+			}
+			if (m_Boundary == 3){	//	Klein bottle
+				tempState[1] = m_Cells[cellX-1][m_Size-1].m_State;
+				tempState[2] = m_Cells[cellX+1][m_Size-1].m_State;
+				tempState[3] = m_Cells[cellX][cellY-1].m_State;
+				tempState[4] = m_Cells[m_Size-1-cellX][0].m_State;
+			}
+		}
+		else{	//	middle
+			tempState[1] = m_Cells[cellX-1][cellY].m_State;
+			tempState[2] = m_Cells[cellX+1][cellY].m_State;
+			tempState[3] = m_Cells[cellX][cellY-1].m_State;
+			tempState[4] = m_Cells[cellX][cellY+1].m_State;
+		}
+	}
+	return (tempState[0]*5 + tempState[1] + tempState[2] + tempState[3] + tempState[4]);
+}
+
+
 //int Automata::findTwoDimensionalState(int cellX, int cellY){
 //	//	check for boundary cells
 //	if (cellX == 0){	//	top of grid
@@ -475,6 +592,22 @@ void Automata::findTwoDimensionalvonNeumannUpdateRule(){
 	std::cout << std::endl;
 }
 
+void Automata::findTwoDimensionalvonNeumannUpdateRule2(){
+	std::vector<int> tempUpdateRule{0,0,0,0,0,0,0,0,0,0};
+	int tempDivisor = m_Rule;
+	for (int i = 9; i >= 0; i--){
+		if (tempDivisor & 1){
+			tempUpdateRule[i] = 1;
+		}
+		else{
+			tempUpdateRule[i] = 0;
+		}
+		tempDivisor >>=1;
+	}
+	m_UpdateRule = tempUpdateRule;
+	std::cout << std::endl;
+}
+
 void Automata::updateOneDimensionalCells(){
 	std::vector<std::vector<Cell> > cellCopy = m_Cells;
 	for (int j = 0; j < m_Size; j++){
@@ -498,6 +631,20 @@ void Automata::updateTwoDimensionalvonNeumannCells(){
 	}
 	m_Cells = cellCopy;
 }
+
+void Automata::updateTwoDimensionalvonNeumannCells2(){
+	std::vector<std::vector<Cell> > cellCopy = m_Cells;
+	for (int i = 0; i < m_Size; i++){
+		for (int j = 0; j < m_Size; j++){
+			//std::cout << cellCopy[j].m_State << std::endl;
+			//std::cout << findOneDimensionalState(j) << std::endl;
+			//std::cout << m_UpdateRule[findOneDimensionalState(j)];
+			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalvonNeumannState2(i,j)];
+		}
+	}
+	m_Cells = cellCopy;
+}
+
 //void Automata::updateTwoDimensionalCells(){
 //
 //}

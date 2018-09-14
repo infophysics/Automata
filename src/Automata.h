@@ -53,6 +53,7 @@ class Automata {
 		//	state determination (class 1)
 		int findOneDimensionalState(int cell);
 		int findTwoDimensionalvonNeumannState(int cellX, int cellY);
+		int findTwoDimensionalvonNeumannState2(int cellX, int cellY);
 		//int findTwoDimensionalMooreState(int cellX, int cellY);	//	not happening
 		
 		//	state determination (class 2)
@@ -67,6 +68,7 @@ class Automata {
 		void findTwoDimensionalMooreUpdateRule2();
 		void updateOneDimensionalCells();
 		void updateTwoDimensionalvonNeumannCells();
+		void updateTwoDimensionalvonNeumannCells2();
 
 		//	printing
 		void printCells();

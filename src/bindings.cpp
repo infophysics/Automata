@@ -40,15 +40,16 @@ PYBIND11_MODULE(automata, m) {
   	  .def("findOneDimensionalState", &Automata::findOneDimensionalState)
   	  .def("findTwoDimensionalvonNeumannState", &Automata::findTwoDimensionalvonNeumannState)
 	  //.def("findOneDimensionalState2", &Automata::findOneDimensionalState2)
-	  //.def("findTwoDimensionalvonNeumannState2", &Automata::findTwoDimensionalvonNeumannState2)
+	  .def("findTwoDimensionalvonNeumannState2", &Automata::findTwoDimensionalvonNeumannState2)
 	  //.def("findTwoDimensionalMooreState2", &Automata::findTwoDimensionalMooreState2)
 	  //	updating cells
   	  .def("findOneDimensionalUpdateRule", &Automata::findOneDimensionalUpdateRule)
 	  .def("findTwoDimensionalvonNeumannUpdateRule", &Automata::findTwoDimensionalvonNeumannUpdateRule)
-	  //.def("findTwoDimensionalvonNeumannUpdateRule2", &Automata::findTwoDimensionalvonNeumannUpdateRule2)
+	  .def("findTwoDimensionalvonNeumannUpdateRule2", &Automata::findTwoDimensionalvonNeumannUpdateRule2)
 	  //.def("findTwoDimensionalMooreUpdateRule2", &Automata::findTwoDimensionalMooreUpdateRule2)
 	  .def("updateOneDimensionalCells", &Automata::updateOneDimensionalCells)
 	  .def("updateTwoDimensionalvonNeumannCells", &Automata::updateTwoDimensionalvonNeumannCells)
+	  .def("updateTwoDimensionalvonNeumannCells2", &Automata::updateTwoDimensionalvonNeumannCells2)
 	  //	printing
 	  .def("printCells", &Automata::printCells)
 	  .def("displayOneDimensionalCells", &Automata::displayOneDimensionalCells)
