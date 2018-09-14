@@ -6,6 +6,7 @@ initialState = [[0 for i in range(301)]]
 initialState[0][150] = 1
 
 test = Automata(1, 301, 0, 22, .4, 300)
+test.initializeOneDimensionalEmptyCells()
 test.setCells(initialState)
 test.displayOneDimensionalCells()
 sequence = test.generateOneDimensionalSequence()
