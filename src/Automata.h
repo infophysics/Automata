@@ -43,34 +43,43 @@ class Automata {
 		void setDensity(float density){m_Density = density;}
 		void setTime(int time){m_Time = time;}
 		//	set cell values
-		void setCells(std::vector<int> states);
+		void setCells(std::vector<std::vector<int> > states);
 		//	getters
 		int getBoundary(){return m_Boundary;}
 		int getRule(){return m_Rule;}
 		float getDensity(){return m_Density;}
 		int getTime(){return m_Time;}
 
-		//	state determination
+		//	state determination (class 1)
 		int findOneDimensionalState(int cell);
-		//int findTwoDimensionalState(int cellX, int cellY);
-
+		int findTwoDimensionalvonNeumannState(int cellX, int cellY);
+		//int findTwoDimensionalMooreState(int cellX, int cellY);	//	not happening
+		
+		//	state determination (class 2)
+		int findOneDimensionalState2(int cell);
+		int findTwoDimensionalvonNeummanState2(int cellX, int cellY);
+		int findTwoDimensionalMooreState2(int cellX, int cellY);
+		
 		//	updating cells
-		void findUpdateRule();
+		void findOneDimensionalUpdateRule();
+		void findTwoDimensionalvonNeumannUpdateRule();
+		void findTwoDimensionalvonNeumannUpdateRule2();
+		void findTwoDimensionalMooreUpdateRule2();
 		void updateOneDimensionalCells();
-		//void updateTwoDimensionalCells();
+		void updateTwoDimensionalCells();
 
 		//	printing
 		void printCells();
 		void displayOneDimensionalCells();
-		//void displayTwoDimensionalCells();
+		void displayTwoDimensionalCells();
 
 		//	initializers
-		void initializeEmptyCells();
-		void initializeCells();
+		void initializeOneDimensionalEmptyCells();
+		void initializeOneDimensionalCells();
 		//void initializeCells(float density);
 
 		//	generators
-		std::vector <std::vector <int> > generateSequence();
+		std::vector <std::vector <int> > generateOneDimensionalSequence();
 		//std::vector <std::vector <int> > generateSequence(int time);
 
 		//	save sequence to file
@@ -78,7 +87,7 @@ class Automata {
 
 
 	private:
-		std::vector < Cell > m_Cells;	//	array of cells
+		std::vector <std::vector < Cell > > m_Cells;	//	array of cells
 		std::vector < int > m_UpdateRule;//	update rule
 		int m_Type;						//	either 1 for 1d or 2 for 2d
 		int m_Size;						//	size of cells
