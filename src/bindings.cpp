@@ -44,18 +44,20 @@ PYBIND11_MODULE(automata, m) {
 	  //.def("findTwoDimensionalMooreState2", &Automata::findTwoDimensionalMooreState2)
 	  //	updating cells
   	  .def("findOneDimensionalUpdateRule", &Automata::findOneDimensionalUpdateRule)
-	  //.def("findTwoDimensionalvonNeumannUpdateRule", &Automata::findTwoDimensionalvonNeumannUpdateRule)
+	  .def("findTwoDimensionalvonNeumannUpdateRule", &Automata::findTwoDimensionalvonNeumannUpdateRule)
 	  //.def("findTwoDimensionalvonNeumannUpdateRule2", &Automata::findTwoDimensionalvonNeumannUpdateRule2)
 	  //.def("findTwoDimensionalMooreUpdateRule2", &Automata::findTwoDimensionalMooreUpdateRule2)
 	  .def("updateOneDimensionalCells", &Automata::updateOneDimensionalCells)
-	  //.def("updateTwoDimensionalCells", &Automata::updateTwoDimensionalCells)
+	  .def("updateTwoDimensionalvonNeumannCells", &Automata::updateTwoDimensionalvonNeumannCells)
 	  //	printing
 	  .def("printCells", &Automata::printCells)
 	  .def("displayOneDimensionalCells", &Automata::displayOneDimensionalCells)
-	  //.def("displayTwoDimensionalCells", &Automata::displayTwoDimensionalCells)  	  
+	  .def("displayTwoDimensionalCells", &Automata::displayTwoDimensionalCells)  	  
 	  //	initializers
   	  .def("initializeOneDimensionalEmptyCells", &Automata::initializeOneDimensionalEmptyCells)
 	  .def("initializeOneDimensionalCells", &Automata::initializeOneDimensionalCells)
+	  .def("initializeTwoDimensionalEmptyCells", &Automata::initializeTwoDimensionalEmptyCells)
+	  .def("initializeTwoDimensionalCells", &Automata::initializeTwoDimensionalCells)
 	  //.def("initializeCells", py::overload_cast<float>(&Automata::initializeCells))
   	  //	generators
   	  .def("generateOneDimensionalSequence", &Automata::generateOneDimensionalSequence)

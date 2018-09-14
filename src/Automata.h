@@ -66,7 +66,7 @@ class Automata {
 		void findTwoDimensionalvonNeumannUpdateRule2();
 		void findTwoDimensionalMooreUpdateRule2();
 		void updateOneDimensionalCells();
-		void updateTwoDimensionalCells();
+		void updateTwoDimensionalvonNeumannCells();
 
 		//	printing
 		void printCells();
@@ -76,6 +76,8 @@ class Automata {
 		//	initializers
 		void initializeOneDimensionalEmptyCells();
 		void initializeOneDimensionalCells();
+		void initializeTwoDimensionalEmptyCells();
+		void initializeTwoDimensionalCells();
 		//void initializeCells(float density);
 
 		//	generators

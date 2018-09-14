@@ -17,8 +17,8 @@ Automata::Automata(int type) : m_Type(type), m_Size(0), m_Boundary(-1), m_Rule(-
 Automata::Automata(int type, int size) : m_Type(type), m_Size(size), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) {}
 Automata::Automata(int type, int size, int boundary) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(-1), m_Density(0), m_Time(0) {}
 Automata::Automata(int type, int size, int boundary, int rule) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(0), m_Time(0) {}
-Automata::Automata(int type, int size, int boundary, int rule, float density) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(density), m_Time(0) {initializeOneDimensionalCells();}
-Automata::Automata(int type, int size, int boundary, int rule, float density, int time) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(density), m_Time(time){initializeOneDimensionalCells();}
+Automata::Automata(int type, int size, int boundary, int rule, float density) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(density), m_Time(0) {}
+Automata::Automata(int type, int size, int boundary, int rule, float density, int time) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(density), m_Time(time){}
 
 
 //	state determination (class 1)
@@ -458,6 +458,23 @@ void Automata::findOneDimensionalUpdateRule(){
 	m_UpdateRule = tempUpdateRule;
 	std::cout << std::endl;
 }
+
+void Automata::findTwoDimensionalvonNeumannUpdateRule(){
+	std::vector<int> tempUpdateRule{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	int tempDivisor = m_Rule;
+	for (int i = 31; i >= 0; i--){
+		if (tempDivisor & 1){
+			tempUpdateRule[i] = 1;
+		}
+		else{
+			tempUpdateRule[i] = 0;
+		}
+		tempDivisor >>=1;
+	}
+	m_UpdateRule = tempUpdateRule;
+	std::cout << std::endl;
+}
+
 void Automata::updateOneDimensionalCells(){
 	std::vector<std::vector<Cell> > cellCopy = m_Cells;
 	for (int j = 0; j < m_Size; j++){
@@ -465,6 +482,19 @@ void Automata::updateOneDimensionalCells(){
 		//std::cout << findOneDimensionalState(j) << std::endl;
 		//std::cout << m_UpdateRule[findOneDimensionalState(j)];
 		cellCopy[0][j].m_State = m_UpdateRule[findOneDimensionalState(j)];
+	}
+	m_Cells = cellCopy;
+}
+
+void Automata::updateTwoDimensionalvonNeumannCells(){
+	std::vector<std::vector<Cell> > cellCopy = m_Cells;
+	for (int i = 0; i < m_Size; i++){
+		for (int j = 0; j < m_Size; j++){
+			//std::cout << cellCopy[j].m_State << std::endl;
+			//std::cout << findOneDimensionalState(j) << std::endl;
+			//std::cout << m_UpdateRule[findOneDimensionalState(j)];
+			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalvonNeumannState(i,j)];
+		}
 	}
 	m_Cells = cellCopy;
 }
@@ -561,6 +591,48 @@ void Automata::initializeOneDimensionalCells(){
 				}
 				else{
 					m_Cells[0][i].m_State = 0;
+				}
+			}
+		}
+	}
+}
+
+void Automata::initializeTwoDimensionalEmptyCells(){
+	findTwoDimensionalvonNeumannUpdateRule();
+	for (int j = 0; j < m_Size; j++){
+		std::vector<Cell> tempCells;
+		if (m_Type == 2){
+			for (int i = 0; i < m_Size; i++){
+				tempCells.push_back(Cell(0));
+			}
+		}
+		m_Cells.push_back(tempCells);
+	}
+}
+void Automata::initializeTwoDimensionalCells(){
+	findTwoDimensionalvonNeumannUpdateRule();
+	//	check for existence of type, size, and density
+	if (m_Type == 0){
+		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
+		return;
+	}
+	else if (m_Size <= 0){
+		std::cout << "ERROR! Size of the space should be at least 1! : m_Size = " << m_Size << std::endl;
+	}
+	else if (m_Density <= 0.0){
+		std::cout << "ERROR! Density must be greater than 0! : m_Density = " << m_Density << std::endl;
+	}
+	else{
+		initializeTwoDimensionalEmptyCells();
+		if (m_Type == 2){
+			for (int j = 0; j < m_Size; j++){
+				for (int i = 0; i < m_Size; i++){
+					if ((float)rand()/RAND_MAX <= m_Density){
+						m_Cells[j][i].m_State = 1;
+					}
+					else{
+						m_Cells[j][i].m_State = 0;
+					}
 				}
 			}
 		}
