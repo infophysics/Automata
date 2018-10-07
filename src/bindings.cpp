@@ -3,26 +3,28 @@
 #include <pybind11/stl_bind.h>
 #include <pybind11/stl.h>
 #include <pybind11/functional.h>
+#include "src/CubicalRipser_2dim/cubicalripser_2dim.cpp"
 
 
 
 namespace py = pybind11;
 
 PYBIND11_MODULE(automata, m) {
-  //	Binding for YieldResult struct
+  //	Binding for Cell struct
   py::class_<Cell>(m, "Cell", py::dynamic_attr())
-		.def(py::init<int>())
+		.def(py::init<int, int>())
 		.def_readwrite("m_State", &Cell::m_State)
+		.def_readwrite("m_NumStates", &Cell::m_NumStates)
 		;
-  //	Binding for the NESTcalc class
+  //	Binding for the Automata class
   py::class_<Automata>(m, "Automata")
   	  .def(py::init<>())
-	  .def(py::init<int>())
-	  .def(py::init<int, int>())
 	  .def(py::init<int, int, int>())
 	  .def(py::init<int, int, int, int>())
-	  .def(py::init<int, int, int, int, float>())
-	  .def(py::init<int, int, int, int, float, int>())
+	  .def(py::init<int, int, int, int, int>())
+	  .def(py::init<int, int, int, int, int, int>())
+	  .def(py::init<int, int, int, int, int, int, float>())
+	  .def(py::init<int, int, int, int, int, int, float, int>())
 
 	  //	setters
   	  .def("setBoundary", &Automata::setBoundary)
@@ -38,16 +40,23 @@ PYBIND11_MODULE(automata, m) {
 	  .def("getTime", &Automata::getTime)
   	  //	state determination
   	  .def("findOneDimensionalState", &Automata::findOneDimensionalState)
+	  .def("findOneDimensionalState_2State", &Automata::findOneDimensionalState_2State)
+	  .def("findOneDimensionalState_2State2", &Automata::findOneDimensionalState_2State2)
+	  .def("findOneDimensionalState_3State2", &Automata::findOneDimensionalState_3State2)
   	  .def("findTwoDimensionalvonNeumannState", &Automata::findTwoDimensionalvonNeumannState)
-	  //.def("findOneDimensionalState2", &Automata::findOneDimensionalState2)
-	  .def("findTwoDimensionalvonNeumannState2", &Automata::findTwoDimensionalvonNeumannState2)
+	  .def("findTwoDimensionalvonNeumannState_2State", &Automata::findTwoDimensionalvonNeumannState_2State)
+	  .def("findTwoDimensionalvonNeumannState_2State2", &Automata::findTwoDimensionalvonNeumannState_2State2)
 	  //.def("findTwoDimensionalMooreState2", &Automata::findTwoDimensionalMooreState2)
 	  //	updating cells
   	  .def("findOneDimensionalUpdateRule", &Automata::findOneDimensionalUpdateRule)
+	  .def("findOneDimensionalUpdateRule_2State", &Automata::findOneDimensionalUpdateRule_2State)
+	  .def("findOneDimensionalUpdateRule_3State2", &Automata::findOneDimensionalUpdateRule_3State2)
 	  .def("findTwoDimensionalvonNeumannUpdateRule", &Automata::findTwoDimensionalvonNeumannUpdateRule)
 	  .def("findTwoDimensionalvonNeumannUpdateRule2", &Automata::findTwoDimensionalvonNeumannUpdateRule2)
 	  //.def("findTwoDimensionalMooreUpdateRule2", &Automata::findTwoDimensionalMooreUpdateRule2)
 	  .def("updateOneDimensionalCells", &Automata::updateOneDimensionalCells)
+	  .def("updateOneDimensionalCells_2State", &Automata::updateOneDimensionalCells_2State)
+	  .def("updateOneDimensionalCells_3State2", &Automata::updateOneDimensionalCells_3State2)
 	  .def("updateTwoDimensionalvonNeumannCells", &Automata::updateTwoDimensionalvonNeumannCells)
 	  .def("updateTwoDimensionalvonNeumannCells2", &Automata::updateTwoDimensionalvonNeumannCells2)
 	  //	printing
@@ -63,6 +72,7 @@ PYBIND11_MODULE(automata, m) {
   	  //	generators
   	  .def("generateOneDimensionalSequence", &Automata::generateOneDimensionalSequence)
   	  //	save sequence to file
-  	  .def("saveSequenceToFile", &Automata::saveSequenceToFile)
-	  ;
+  	  .def("saveOneDimensionalSequenceToFile", &Automata::saveOneDimensionalSequenceToFile)
+	  ;  		  		
 }
+

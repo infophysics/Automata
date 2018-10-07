@@ -20,8 +20,13 @@
 //	Cell struct
 struct Cell{
 	int m_State;	//	self state
-	std::vector<int> m_NState{0,0,0,0,0,0,0,0};	//	neighbors state 0-8 for 1d using the Wolfram rules
-	Cell(int state) : m_State(state) {}
+	int m_NumStates;
+	std::vector<int> m_NState;	//	neighbors state using the Wolfram rules
+	Cell(int state, int numStates) : m_State(state), m_NumStates(numStates) {
+		for(int i = 0; i < numStates; i++){
+			m_NState.push_back(0);
+		}
+	}
 };
 
 
@@ -31,12 +36,12 @@ class Automata {
 	public:
 		Automata();
 		virtual ~Automata();
-		Automata(int type);
-		Automata(int type, int size);
-		Automata(int type, int size, int boundary);
-		Automata(int type, int size, int boundary, int rule);
-		Automata(int type, int size, int boundary, int rule, float density);
-		Automata(int type, int size, int boundary, int rule, float density, int time);
+		Automata(int dim, int size, int numStates);
+		Automata(int dim, int size, int numStates, int boundary);
+		Automata(int dim, int size, int numStates, int boundary, int rule);
+		Automata(int dim, int size, int numStates, int boundary, int rule, int type);
+		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density);
+		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int time);
 		//	setters
 		void setBoundary(int boundary){m_Boundary = boundary;}
 		void setRule(int rule){m_Rule = rule;}
@@ -50,27 +55,36 @@ class Automata {
 		float getDensity(){return m_Density;}
 		int getTime(){return m_Time;}
 
-		//	state determination (class 1)
+		//	states
 		int findOneDimensionalState(int cell);
-		int findTwoDimensionalvonNeumannState(int cellX, int cellY);
-		int findTwoDimensionalvonNeumannState2(int cellX, int cellY);
-		//int findTwoDimensionalMooreState(int cellX, int cellY);	//	not happening
+		//	state determination (type 1)
+		int findOneDimensionalState_2State(int cell);
+		//	state determination (type 2)
+		int findOneDimensionalState_2State2(int cell);
+		int findOneDimensionalState_3State2(int cell);
 		
-		//	state determination (class 2)
-		int findOneDimensionalState2(int cell);
-		int findOneDimensionalState3States2(int cell);
-		int findTwoDimensionalvonNeummanState2(int cellX, int cellY);
-		int findTwoDimensionalMooreState2(int cellX, int cellY);
+		//	two dimensional states
+		int findTwoDimensionalState(int cellX, int cellY);
+		//	state determination (type 1)
+		int findTwoDimensionalvonNeumannState_2State(int cellX, int cellY);
+		//int findTwoDimensionalMooreState(int cellX, int cellY);	//	not happening
+		//	state determination (type 2)
+		int findTwoDimensionalvonNeumannState_2State2(int cellX, int cellY);
+		int findTwoDimensionalMooreState_2State2(int cellX, int cellY);
 		
 		//	updating cells
 		void findOneDimensionalUpdateRule();
-		void findOneDimensionalUpdateRule2ndOrder2();
-		void findOneDimensionalUpdateRule3States2();
+		void findOneDimensionalUpdateRule_2State();
+		void findOneDimensionalUpdateRule_3State2();
+		
 		void findTwoDimensionalvonNeumannUpdateRule();
 		void findTwoDimensionalvonNeumannUpdateRule2();
 		void findTwoDimensionalMooreUpdateRule2();
+		
 		void updateOneDimensionalCells();
-		void updateOneDimensionalCells3States2();
+		void updateOneDimensionalCells_2State();
+		void updateOneDimensionalCells_3State2();
+		
 		void updateTwoDimensionalvonNeumannCells();
 		void updateTwoDimensionalvonNeumannCells2();
 
@@ -89,17 +103,20 @@ class Automata {
 
 		//	generators
 		std::vector <std::vector <int> > generateOneDimensionalSequence();
-		std::vector <std::vector <int> > generateOneDimensionalSequence3States2();
+		std::vector <std::vector <int> > generateOneDimensionalSequence_2State();
+		std::vector <std::vector <int> > generateOneDimensionalSequence_3State2();
 		//std::vector <std::vector <int> > generateSequence(int time);
 
 		//	save sequence to file
-		void saveSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName);
+		void saveOneDimensionalSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName);
 
 
 	private:
 		std::vector <std::vector < Cell > > m_Cells;	//	array of cells
 		std::vector < int > m_UpdateRule;//	update rule
-		int m_Type;						//	either 1 for 1d or 2 for 2d
+		int m_NumStates;				//	number of states for each cell
+		int m_Dim;						//	either 1 for 1d or 2 for 2d
+		int m_Type;						//	either 0 for unique states, or 1 for equivalence classes of states (totality).
 		int m_Order;					//	NN order, 1st order, 2nd order only
 		int m_Size;						//	size of cells
 		int m_Boundary;					//	boundary conditions 1d-(0-circle, 1-line), 2d-(0-sphere,1-torus,2-cylinder,3-klein_bottle,4-mobius,5-square)

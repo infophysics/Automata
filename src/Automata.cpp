@@ -13,16 +13,33 @@
 Automata::Automata() : m_Type(0), m_Size(0), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) {}
 Automata::~Automata() {}
 //	Various constructors
-Automata::Automata(int type) : m_Type(type), m_Size(0), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) {}
-Automata::Automata(int type, int size) : m_Type(type), m_Size(size), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) {}
-Automata::Automata(int type, int size, int boundary) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(-1), m_Density(0), m_Time(0) {}
-Automata::Automata(int type, int size, int boundary, int rule) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(0), m_Time(0) {}
-Automata::Automata(int type, int size, int boundary, int rule, float density) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(density), m_Time(0) {}
-Automata::Automata(int type, int size, int boundary, int rule, float density, int time) : m_Type(type), m_Size(size), m_Boundary(boundary), m_Rule(rule), m_Density(density), m_Time(time){}
+Automata::Automata(int dim, int size, int numStates) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(-1), m_Rule(-1), m_Type(0), m_Density(0), m_Time(0) {}
+Automata::Automata(int dim, int size, int numStates, int boundary) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(-1), m_Type(0), m_Density(0), m_Time(0) {}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(0), m_Density(0), m_Time(0) {}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(0), m_Time(0) {}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(0) {}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int time) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(time){}
 
+//	states
+int Automata::findOneDimensionalState(int cell){
+	//	determine type
+	if (m_Type == 0){
+		if (m_NumStates == 2){
+			return findOneDimensionalState_2State(cell);
+		}
+	}
+	else{
+		if (m_NumStates == 2){
+			return findOneDimensionalState_2State2(cell);
+		}
+		else if (m_NumStates == 3){
+			return findOneDimensionalState_3State2(cell);
+		}
+	}
+}
 
 //	state determination (class 1)
-int Automata::findOneDimensionalState(int cell){
+int Automata::findOneDimensionalState_2State(int cell){
 	//	check for boundary cells
 	if (cell == 0){
 		//	check for boundary conditions
@@ -148,7 +165,33 @@ int Automata::findOneDimensionalState(int cell){
 		}
 	}
 }
-int Automata::findOneDimensionalState3States2(int cell){
+
+int Automata::findOneDimensionalState_2State2(int cell){
+	//	check for boundary cells
+	if (cell == 0){
+		//	check for boundary conditions
+		if (m_Boundary == 0){	//	circle topology
+			return (m_Cells[0][0].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[0][1].m_State);
+		}
+		else{
+			return (m_Cells[0][0].m_State + m_Cells[0][1].m_State);
+		}
+	}
+	else if (cell == m_Size - 1){
+		//	check for boundary conditions
+		if (m_Boundary == 0){	//	circle topology
+			return (m_Cells[0][0].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[0][m_Size - 2].m_State);
+		}
+		else{
+			return (m_Cells[0][m_Size-1].m_State + m_Cells[0][m_Size - 2].m_State);
+		}
+	}
+	else{
+		return (m_Cells[0][cell].m_State + m_Cells[0][cell-1].m_State + m_Cells[0][cell+1].m_State);
+	}
+}
+
+int Automata::findOneDimensionalState_3State2(int cell){
 	//	check for boundary cells
 	if (cell == 0){
 		//	check for boundary conditions
@@ -174,7 +217,7 @@ int Automata::findOneDimensionalState3States2(int cell){
 }
 
 //	CAUTION: this does not apply to hard boundary conditions or a sphere or a projective plane
-int Automata::findTwoDimensionalvonNeumannState(int cellX, int cellY){
+int Automata::findTwoDimensionalvonNeumannState_2State(int cellX, int cellY){
 	//	create temporary vector of five elements
 	int tempState[5];
 	tempState[0] = m_Cells[cellX][cellY].m_State;
@@ -290,7 +333,7 @@ int Automata::findTwoDimensionalvonNeumannState(int cellX, int cellY){
 	return (tempState[0] + tempState[1]*2 + tempState[2]*4 + tempState[3]*8 + tempState[4]*16);
 }
 
-int Automata::findTwoDimensionalvonNeumannState2(int cellX, int cellY){
+int Automata::findTwoDimensionalvonNeumannState_2State2(int cellX, int cellY){
 	//	create temporary vector of five elements
 	int tempState[5];
 	tempState[0] = m_Cells[cellX][cellY].m_State;
@@ -585,6 +628,20 @@ int Automata::findTwoDimensionalvonNeumannState2(int cellX, int cellY){
 
 //	updating cells
 void Automata::findOneDimensionalUpdateRule(){
+	//	check for num states
+	if (m_NumStates == 2){
+		if (m_Type == 0){
+			findOneDimensionalUpdateRule_2State();
+		}
+	}
+	else if (m_NumStates == 3){
+		if (m_Type == 1){
+			findOneDimensionalUpdateRule_3State2();
+		}
+	}
+}
+
+void Automata::findOneDimensionalUpdateRule_2State(){
 	std::vector<int> tempUpdateRule{0,0,0,0,0,0,0,0};
 	int tempDivisor = m_Rule;
 	for (int i = 7; i >= 0; i--){
@@ -598,14 +655,10 @@ void Automata::findOneDimensionalUpdateRule(){
 	}
 	m_UpdateRule = tempUpdateRule;
 }
-//	Totalistic rule for 2nd order 1 dimensional
-void Automata::findOneDimensionalUpdateRule2ndOrder2(){
-	
-}
 
 //Totalistic rule for 1st order 3 states
 //	3^6 + 3^5 + 3^4 + 3^3 + 3^2 + 3 + 1
-void Automata::findOneDimensionalUpdateRule3States2(){
+void Automata::findOneDimensionalUpdateRule_3State2(){
 	std::vector<int> tempUpdateRules{0,0,0,0,0,0,0};
 	int tempDivisor = m_Rule;
 	for (int i = 6; i >=0; i--){
@@ -657,8 +710,20 @@ void Automata::findTwoDimensionalvonNeumannUpdateRule2(){
 	m_UpdateRule = tempUpdateRule;
 	std::cout << std::endl;
 }
-
 void Automata::updateOneDimensionalCells(){
+	if (m_NumStates == 2){
+		if (m_Type == 0){
+			updateOneDimensionalCells_2State();
+		}
+	}
+	else if (m_NumStates == 3){
+		if (m_Type == 1){
+			updateOneDimensionalCells_3State2();
+		}
+	}
+}
+
+void Automata::updateOneDimensionalCells_2State(){
 	std::vector<std::vector<Cell> > cellCopy = m_Cells;
 	for (int j = 0; j < m_Size; j++){
 		//std::cout << cellCopy[j].m_State << std::endl;
@@ -669,13 +734,13 @@ void Automata::updateOneDimensionalCells(){
 	m_Cells = cellCopy;
 }
 
-void Automata::updateOneDimensionalCells3States2(){
+void Automata::updateOneDimensionalCells_3State2(){
 	std::vector<std::vector<Cell> > cellCopy = m_Cells;
 	for (int j = 0; j < m_Size; j++){
 		//std::cout << cellCopy[0][j].m_State << std::endl;
 		//std::cout << findOneDimensionalState3States2(j) << std::endl;
 		//std::cout << m_UpdateRule[findOneDimensionalState3States2(j)] << std::endl;
-		cellCopy[0][j].m_State = m_UpdateRule[findOneDimensionalState3States2(j)];
+		cellCopy[0][j].m_State = m_UpdateRule[findOneDimensionalState_3State2(j)];
 	}
 	m_Cells = cellCopy;
 }
@@ -687,7 +752,7 @@ void Automata::updateTwoDimensionalvonNeumannCells(){
 			//std::cout << cellCopy[j].m_State << std::endl;
 			//std::cout << findOneDimensionalState(j) << std::endl;
 			//std::cout << m_UpdateRule[findOneDimensionalState(j)];
-			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalvonNeumannState(i,j)];
+			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalvonNeumannState_2State(i,j)];
 		}
 	}
 	m_Cells = cellCopy;
@@ -700,7 +765,7 @@ void Automata::updateTwoDimensionalvonNeumannCells2(){
 			//std::cout << cellCopy[j].m_State << std::endl;
 			//std::cout << findOneDimensionalState(j) << std::endl;
 			//std::cout << m_UpdateRule[findOneDimensionalState(j)];
-			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalvonNeumannState2(i,j)];
+			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalvonNeumannState_2State2(i,j)];
 		}
 	}
 	m_Cells = cellCopy;
@@ -789,16 +854,17 @@ void Automata::initializeOneDimensionalEmptyCells(){
 	std::vector<Cell> tempCells;
 	if (m_Type == 1){
 		for (int i = 0; i < m_Size; i++){
-			tempCells.push_back(Cell(0));
+			tempCells.push_back(Cell(0, m_NumStates));
 		}
 	}
 	m_Cells.push_back(tempCells);
 }
 
 void Automata::initializeOneDimensionalCells(){
+	
 	findOneDimensionalUpdateRule();
-	//	check for existence of type, size, and density
-	if (m_Type == 0){
+	//	check for existence of dimension, type, size, and density
+	if (m_Dim == 0){
 		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
 		return;
 	}
@@ -810,7 +876,7 @@ void Automata::initializeOneDimensionalCells(){
 	}
 	else{
 		initializeOneDimensionalEmptyCells();
-		if (m_Type == 1){
+		if (m_Dim == 1){
 			for (int i = 0; i < m_Size; i++){
 				if ((float)rand()/RAND_MAX <= m_Density){
 					m_Cells[0][i].m_State = 1;
@@ -829,7 +895,7 @@ void Automata::initializeTwoDimensionalEmptyCells(){
 		std::vector<Cell> tempCells;
 		if (m_Type == 2){
 			for (int i = 0; i < m_Size; i++){
-				tempCells.push_back(Cell(0));
+				tempCells.push_back(Cell(0, m_NumStates));
 			}
 		}
 		m_Cells.push_back(tempCells);
@@ -889,8 +955,20 @@ void Automata::initializeTwoDimensionalCells(){
 //	}
 //}
 
-//	generators
 std::vector <std::vector <int> > Automata::generateOneDimensionalSequence(){
+	if (m_NumStates == 2){
+		if (m_Type == 0){
+			return generateOneDimensionalSequence_2State();
+		}
+	}
+	else if (m_NumStates == 3){
+		if (m_Type == 1){
+			return generateOneDimensionalSequence_3State2();
+		}
+	}
+}
+//	generators
+std::vector <std::vector <int> > Automata::generateOneDimensionalSequence_2State(){
 	//	check for necessary conditions
 	std::vector <std::vector <int> > sequence;
 	for (int i = 0; i < m_Time; i++){
@@ -904,7 +982,7 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence(){
 	return sequence;
 }
 
-std::vector <std::vector <int> > Automata::generateOneDimensionalSequence3States2(){
+std::vector <std::vector <int> > Automata::generateOneDimensionalSequence_3State2(){
 	//	check for necessary conditions
 	std::vector <std::vector <int> > sequence;
 	for (int i = 0; i < m_Time; i++){
@@ -913,7 +991,7 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence3States
 			tempCells.push_back(m_Cells[0][j].m_State);
 		}
 		sequence.push_back(tempCells);
-		updateOneDimensionalCells3States2();
+		updateOneDimensionalCells_3State2();
 	}
 	return sequence;
 }
@@ -933,7 +1011,7 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence3States
 //}
 
 //	save sequence to file
-void Automata::saveSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName){
+void Automata::saveOneDimensionalSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName){
 	std::ofstream myfile;
 	myfile.open(fileName);
 	for (int i = 0; i < sequence.size(); i++){
@@ -963,17 +1041,17 @@ int main(){
 	
 	std::vector<std::vector<int> > initial;
 	initial.push_back(initialState);
-	Automata test(1, 51, 0, 1086, .4, 500);
+	Automata test(1, 51, 3, 0, 1086, 1, .4, 500);
 	test.initializeOneDimensionalEmptyCells();
 	test.setCells(initial);
-	test.findOneDimensionalUpdateRule3States2();
+	test.findOneDimensionalUpdateRule();
 	//test.printCells();
-	test.displayOneDimensionalCells3States2();
+	test.displayOneDimensionalCells();
 	//std::vector <std::vector <int> > sequence = test.generateOneDimensionalSequence3States2();
 	//test.saveSequenceToFile(sequence, "test.csv");
 	for (int i = 0; i < 25; i++){
-		test.updateOneDimensionalCells3States2();
-		test.displayOneDimensionalCells3States2();
+		test.updateOneDimensionalCells();
+		test.displayOneDimensionalCells();
 	}
 
 	return 0;
