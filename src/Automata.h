@@ -58,21 +58,26 @@ class Automata {
 		
 		//	state determination (class 2)
 		int findOneDimensionalState2(int cell);
+		int findOneDimensionalState3States2(int cell);
 		int findTwoDimensionalvonNeummanState2(int cellX, int cellY);
 		int findTwoDimensionalMooreState2(int cellX, int cellY);
 		
 		//	updating cells
 		void findOneDimensionalUpdateRule();
+		void findOneDimensionalUpdateRule2ndOrder2();
+		void findOneDimensionalUpdateRule3States2();
 		void findTwoDimensionalvonNeumannUpdateRule();
 		void findTwoDimensionalvonNeumannUpdateRule2();
 		void findTwoDimensionalMooreUpdateRule2();
 		void updateOneDimensionalCells();
+		void updateOneDimensionalCells3States2();
 		void updateTwoDimensionalvonNeumannCells();
 		void updateTwoDimensionalvonNeumannCells2();
 
 		//	printing
 		void printCells();
 		void displayOneDimensionalCells();
+		void displayOneDimensionalCells3States2();
 		void displayTwoDimensionalCells();
 
 		//	initializers
@@ -84,6 +89,7 @@ class Automata {
 
 		//	generators
 		std::vector <std::vector <int> > generateOneDimensionalSequence();
+		std::vector <std::vector <int> > generateOneDimensionalSequence3States2();
 		//std::vector <std::vector <int> > generateSequence(int time);
 
 		//	save sequence to file
@@ -94,6 +100,7 @@ class Automata {
 		std::vector <std::vector < Cell > > m_Cells;	//	array of cells
 		std::vector < int > m_UpdateRule;//	update rule
 		int m_Type;						//	either 1 for 1d or 2 for 2d
+		int m_Order;					//	NN order, 1st order, 2nd order only
 		int m_Size;						//	size of cells
 		int m_Boundary;					//	boundary conditions 1d-(0-circle, 1-line), 2d-(0-sphere,1-torus,2-cylinder,3-klein_bottle,4-mobius,5-square)
 		int m_Rule;						//	automata rule, 1d-2^2 = 4, 2d-2^9 = 512

@@ -148,6 +148,30 @@ int Automata::findOneDimensionalState(int cell){
 		}
 	}
 }
+int Automata::findOneDimensionalState3States2(int cell){
+	//	check for boundary cells
+	if (cell == 0){
+		//	check for boundary conditions
+		if (m_Boundary == 0){	//	circle topology
+			return (m_Cells[0][0].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[0][1].m_State);
+		}
+		else{
+			return (m_Cells[0][0].m_State + m_Cells[0][1].m_State);
+		}
+	}
+	else if (cell == m_Size - 1){
+		//	check for boundary conditions
+		if (m_Boundary == 0){	//	circle topology
+			return (m_Cells[0][0].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[0][m_Size - 2].m_State);
+		}
+		else{
+			return (m_Cells[0][m_Size-1].m_State + m_Cells[0][m_Size - 2].m_State);
+		}
+	}
+	else{
+		return (m_Cells[0][cell].m_State + m_Cells[0][cell-1].m_State + m_Cells[0][cell+1].m_State);
+	}
+}
 
 //	CAUTION: this does not apply to hard boundary conditions or a sphere or a projective plane
 int Automata::findTwoDimensionalvonNeumannState(int cellX, int cellY){
@@ -573,7 +597,33 @@ void Automata::findOneDimensionalUpdateRule(){
 		tempDivisor >>=1;
 	}
 	m_UpdateRule = tempUpdateRule;
-	std::cout << std::endl;
+}
+//	Totalistic rule for 2nd order 1 dimensional
+void Automata::findOneDimensionalUpdateRule2ndOrder2(){
+	
+}
+
+//Totalistic rule for 1st order 3 states
+//	3^6 + 3^5 + 3^4 + 3^3 + 3^2 + 3 + 1
+void Automata::findOneDimensionalUpdateRule3States2(){
+	std::vector<int> tempUpdateRules{0,0,0,0,0,0,0};
+	int tempDivisor = m_Rule;
+	for (int i = 6; i >=0; i--){
+		if (tempDivisor % 3 != 0){
+			tempUpdateRules[i] = (tempDivisor % 3);
+			
+		}
+		else{
+			
+			tempUpdateRules[i] = 0;
+		}
+		tempDivisor /= 3;
+	}
+	std::vector<int> newUpdateRules;
+	for (int i = 6; i >=0; i--){
+		newUpdateRules.push_back(tempUpdateRules[i]);
+	}
+	m_UpdateRule = newUpdateRules;
 }
 
 void Automata::findTwoDimensionalvonNeumannUpdateRule(){
@@ -615,6 +665,17 @@ void Automata::updateOneDimensionalCells(){
 		//std::cout << findOneDimensionalState(j) << std::endl;
 		//std::cout << m_UpdateRule[findOneDimensionalState(j)];
 		cellCopy[0][j].m_State = m_UpdateRule[findOneDimensionalState(j)];
+	}
+	m_Cells = cellCopy;
+}
+
+void Automata::updateOneDimensionalCells3States2(){
+	std::vector<std::vector<Cell> > cellCopy = m_Cells;
+	for (int j = 0; j < m_Size; j++){
+		//std::cout << cellCopy[0][j].m_State << std::endl;
+		//std::cout << findOneDimensionalState3States2(j) << std::endl;
+		//std::cout << m_UpdateRule[findOneDimensionalState3States2(j)] << std::endl;
+		cellCopy[0][j].m_State = m_UpdateRule[findOneDimensionalState3States2(j)];
 	}
 	m_Cells = cellCopy;
 }
@@ -676,6 +737,24 @@ void Automata::displayOneDimensionalCells(){
 		std::cout << "|" << std::endl;
 }
 
+void Automata::displayOneDimensionalCells3States2(){
+//	for (int i = 0; i < 100; i++){
+//			std::cout << std::endl;
+//		}
+		std::cout << "|";
+		for (int j = 0; j < m_Size; j++){
+			if (m_Cells[0][j].m_State == 0){
+				std::cout << " ";
+			}
+			else if (m_Cells[0][j].m_State == 1){
+				std::cout << "*";
+			}
+			else{
+				std::cout << "o";
+			}
+		}
+		std::cout << "|" << std::endl;
+}
 
 void Automata::displayTwoDimensionalCells(){
 	for (int i = 0; i < 100; i++){
@@ -825,6 +904,19 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence(){
 	return sequence;
 }
 
+std::vector <std::vector <int> > Automata::generateOneDimensionalSequence3States2(){
+	//	check for necessary conditions
+	std::vector <std::vector <int> > sequence;
+	for (int i = 0; i < m_Time; i++){
+		std::vector <int> tempCells;
+		for (int j = 0; j < m_Size; j++){
+			tempCells.push_back(m_Cells[0][j].m_State);
+		}
+		sequence.push_back(tempCells);
+		updateOneDimensionalCells3States2();
+	}
+	return sequence;
+}
 //std::vector <std::vector <int> > Automata::generateSequence(int time){
 //	m_Time = time;
 //	//	check for necessary conditions
@@ -864,22 +956,24 @@ int main(){
 
 	//	initial state
 	std::vector<int> initialState;
-	for (int i = 0; i < 101; i++){
+	for (int i = 0; i < 51; i++){
 		initialState.push_back(0);
 	}
-	initialState[50] = 1;
+	initialState[25] = 1;
 	
 	std::vector<std::vector<int> > initial;
 	initial.push_back(initialState);
-	Automata test(1, 101, 0, 18, .4, 500);
+	Automata test(1, 51, 0, 1086, .4, 500);
+	test.initializeOneDimensionalEmptyCells();
 	test.setCells(initial);
+	test.findOneDimensionalUpdateRule3States2();
 	//test.printCells();
-	test.displayOneDimensionalCells();
-	std::vector <std::vector <int> > sequence = test.generateOneDimensionalSequence();
-	test.saveSequenceToFile(sequence, "test.csv");
+	test.displayOneDimensionalCells3States2();
+	//std::vector <std::vector <int> > sequence = test.generateOneDimensionalSequence3States2();
+	//test.saveSequenceToFile(sequence, "test.csv");
 	for (int i = 0; i < 25; i++){
-		test.updateOneDimensionalCells();
-		test.displayOneDimensionalCells();
+		test.updateOneDimensionalCells3States2();
+		test.displayOneDimensionalCells3States2();
 	}
 
 	return 0;
