@@ -1024,20 +1024,30 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence_3State
 	}
 	return sequence;
 }
-//std::vector <std::vector <int> > Automata::generateSequence(int time){
-//	m_Time = time;
-//	//	check for necessary conditions
-//	std::vector <std::vector <int> > sequence;
-//	for (int i = 0; i < m_Time; i++){
-//		std::vector <int> tempCells;
-//		for (int j = 0; j < m_Size; j++){
-//			tempCells.push_back(m_Cells[j].m_State);
-//		}
-//		sequence.push_back(tempCells);
-//		updateOneDimensionalCells();
-//	}
-//	return sequence;
-//}
+
+std::vector<std::vector <std::vector <int>  > > Automata::generateTwoDimensionalSequence(){
+	if (m_NumStates == 2){
+		return generateTwoDimensionalSequence_2State();
+	}
+}
+
+std::vector<std::vector <std::vector <int>  > > Automata::generateTwoDimensionalSequence_2State(){
+	//	check for necessary conditions
+	std::vector <std::vector <std::vector <int> > > sequence;
+	for (int i = 0; i < m_Time; i++){
+		std::vector <std::vector <int> > tempCells;
+		for (int k = 0; k < m_Size; k++){
+			std::vector <int> temp;
+			for (int j = 0; j < m_Size; j++){
+				temp.push_back(m_Cells[k][j].m_State);
+			}
+			tempCells.push_back(temp);
+		}
+		sequence.push_back(tempCells);
+		updateTwoDimensionalCells();
+	}
+	return sequence;
+}
 
 //	save sequence to file
 void Automata::saveOneDimensionalSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName){
@@ -1055,7 +1065,22 @@ void Automata::saveOneDimensionalSequenceToFile(std::vector <std::vector <int> >
 	myfile.close();
 }
 
-
+void Automata::saveTwoDimensionalSequenceToFile(std::vector <std::vector <std::vector <int> > > sequence, const char * fileName){
+	std::ofstream myfile;
+	myfile.open(fileName);
+	for (int i = 0; i < sequence.size(); i++){
+		for (int j = 0; j < m_Size; j++){
+			for (int k = 0; k < m_Size; k++){
+				myfile << sequence[i][j][k];
+				if (j != m_Size - 1){
+					myfile << ",";
+				}
+			}
+		}
+		myfile << "\n";
+	}
+	myfile.close();
+}
 
 int main(){
 

@@ -3,7 +3,6 @@
 #include <pybind11/stl_bind.h>
 #include <pybind11/stl.h>
 #include <pybind11/functional.h>
-#include "src/CubicalRipser_2dim/cubicalripser_2dim.cpp"
 
 
 
@@ -43,7 +42,6 @@ PYBIND11_MODULE(automata, m) {
 	  .def("findOneDimensionalState_2State", &Automata::findOneDimensionalState_2State)
 	  .def("findOneDimensionalState_2State2", &Automata::findOneDimensionalState_2State2)
 	  .def("findOneDimensionalState_3State2", &Automata::findOneDimensionalState_3State2)
-  	  .def("findTwoDimensionalvonNeumannState", &Automata::findTwoDimensionalvonNeumannState)
 	  .def("findTwoDimensionalvonNeumannState_2State", &Automata::findTwoDimensionalvonNeumannState_2State)
 	  .def("findTwoDimensionalvonNeumannState_2State2", &Automata::findTwoDimensionalvonNeumannState_2State2)
 	  //.def("findTwoDimensionalMooreState2", &Automata::findTwoDimensionalMooreState2)
@@ -51,18 +49,19 @@ PYBIND11_MODULE(automata, m) {
   	  .def("findOneDimensionalUpdateRule", &Automata::findOneDimensionalUpdateRule)
 	  .def("findOneDimensionalUpdateRule_2State", &Automata::findOneDimensionalUpdateRule_2State)
 	  .def("findOneDimensionalUpdateRule_3State2", &Automata::findOneDimensionalUpdateRule_3State2)
-	  .def("findTwoDimensionalvonNeumannUpdateRule", &Automata::findTwoDimensionalvonNeumannUpdateRule)
-	  .def("findTwoDimensionalvonNeumannUpdateRule2", &Automata::findTwoDimensionalvonNeumannUpdateRule2)
+	  .def("findTwoDimensionalvonNeumannUpdateRule_2State", &Automata::findTwoDimensionalvonNeumannUpdateRule_2State)
+	  .def("findTwoDimensionalvonNeumannUpdateRule_2State2", &Automata::findTwoDimensionalvonNeumannUpdateRule_2State2)
 	  //.def("findTwoDimensionalMooreUpdateRule2", &Automata::findTwoDimensionalMooreUpdateRule2)
 	  .def("updateOneDimensionalCells", &Automata::updateOneDimensionalCells)
 	  .def("updateOneDimensionalCells_2State", &Automata::updateOneDimensionalCells_2State)
 	  .def("updateOneDimensionalCells_3State2", &Automata::updateOneDimensionalCells_3State2)
-	  .def("updateTwoDimensionalvonNeumannCells", &Automata::updateTwoDimensionalvonNeumannCells)
-	  .def("updateTwoDimensionalvonNeumannCells2", &Automata::updateTwoDimensionalvonNeumannCells2)
+	  .def("updateTwoDimensionalCells", &Automata::updateTwoDimensionalCells)
+	  .def("updateTwoDimensionalvonNeumannCells_2State", &Automata::updateTwoDimensionalvonNeumannCells_2State)
+	  .def("updateTwoDimensionalvonNeumannCells_2State2", &Automata::updateTwoDimensionalvonNeumannCells_2State2)
 	  //	printing
 	  .def("printCells", &Automata::printCells)
-	  .def("displayOneDimensionalCells", &Automata::displayOneDimensionalCells)
-	  .def("displayTwoDimensionalCells", &Automata::displayTwoDimensionalCells)  	  
+	  .def("displayOneDimensionalCells_2State", &Automata::displayOneDimensionalCells_2State)
+	  .def("displayTwoDimensionalCells_2State", &Automata::displayTwoDimensionalCells_2State)  	  
 	  //	initializers
   	  .def("initializeOneDimensionalEmptyCells", &Automata::initializeOneDimensionalEmptyCells)
 	  .def("initializeOneDimensionalCells", &Automata::initializeOneDimensionalCells)
@@ -71,8 +70,11 @@ PYBIND11_MODULE(automata, m) {
 	  //.def("initializeCells", py::overload_cast<float>(&Automata::initializeCells))
   	  //	generators
   	  .def("generateOneDimensionalSequence", &Automata::generateOneDimensionalSequence)
+	  .def("generateTwoDimensionalSequence", &Automata::generateTwoDimensionalSequence)
+	  .def("generateTwoDimensionalSequence_2State", &Automata::generateTwoDimensionalSequence_2State)
   	  //	save sequence to file
   	  .def("saveOneDimensionalSequenceToFile", &Automata::saveOneDimensionalSequenceToFile)
+	  .def("saveTwoDimensionalSequenceToFile", &Automata::saveTwoDimensionalSequenceToFile)
 	  ;  		  		
 }
 

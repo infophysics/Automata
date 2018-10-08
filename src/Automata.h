@@ -109,9 +109,12 @@ class Automata {
 		std::vector <std::vector <int> > generateOneDimensionalSequence_2State();
 		std::vector <std::vector <int> > generateOneDimensionalSequence_3State2();
 		//std::vector <std::vector <int> > generateSequence(int time);
-
+		
+		std::vector<std::vector <std::vector <int>  > > generateTwoDimensionalSequence();
+		std::vector<std::vector <std::vector <int>  > > generateTwoDimensionalSequence_2State();
 		//	save sequence to file
 		void saveOneDimensionalSequenceToFile(std::vector <std::vector <int> > sequence, const char * fileName);
+		void saveTwoDimensionalSequenceToFile(std::vector <std::vector <std::vector <int> > > sequence, const char * fileName);
 
 
 	private:
