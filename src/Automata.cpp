@@ -7,7 +7,7 @@
 
 #include "Automata.h"
 #include <stdio.h>
-
+#include <unistd.h>
 
 //	Default constructor
 Automata::Automata() : m_Type(0), m_Size(0), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) {}
@@ -450,181 +450,182 @@ int Automata::findTwoDimensionalvonNeumannState_2State2(int cellX, int cellY){
 }
 
 
-//int Automata::findTwoDimensionalState(int cellX, int cellY){
-//	//	check for boundary cells
-//	if (cellX == 0){	//	top of grid
-//		if (cellY == 0){	//	top left
-//			//	check boundary conditions
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[0][1] + m_Cells[1][0] + m_Cells[1][1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[0][1] + m_Cells[1][0] + m_Cells[1][1] + m_Cells[0][m_Size-1] + m_Cells[1][m_Size-1] + m_Cells[m_Size-1][0] + m_Cells[m_Size-1][1] + m_Cells[m_Size-1][m_Size-1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[0][1] + m_Cells[1][0] + m_Cells[1][1] + m_Cells[0][m_Size-1] + m_Cells[1][m_Size-1];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[0][1] + m_Cells[1][0] + m_Cells[1][1] + m_Cells[0][m_Size-1] + m_Cells[1][m_Size-1] + m_Cells[m_Size-1][0] + m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-1][m_Size-1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[0][1] + m_Cells[1][0] + m_Cells[1][1] + m_Cells[m_Size-2][m_Size-1] + m_Cells[m_Size-1][m_Size-1];
-//			}
-//			else{	//	square topology
-//				return m_Cells[0][1] + m_Cells[1][0] + m_Cells[1][1];
-//			}
-//		}
-//		else if (cellY == m_Size - 1){
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[0][m_Size-2] + m_Cells[1][m_Size-2] + m_Cells[1][m_Size-1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[0][m_Size-2] + m_Cells[1][m_Size-2] + m_Cells[1][m_Size-1] + m_Cells[0][0] + m_Cells[1][0] + m_Cells[m_Size-1][0] + m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-1][m_Size-1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[0][m_Size-2] + m_Cells[1][m_Size-2] + m_Cells[1][m_Size-1] + m_Cells[0][0] + m_Cells[1][0];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[0][m_Size-2] + m_Cells[1][m_Size-2] + m_Cells[1][m_Size-1] + m_Cells[0][0] + m_Cells[1][0] + m_Cells[m_Size-1][0] + m_Cells[m_Size-1][1] + m_Cells[m_Size-1][m_Size-1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[0][m_Size-2] + m_Cells[1][m_Size-2] + m_Cells[1][m_Size-1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-1][0];
-//			}
-//			else{	//	square topology
-//				return m_Cells[0][m_Size-2] + m_Cells[1][m_Size-2] + m_Cells[1][m_Size-1];
-//			}
-//		}
-//		else{
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[0][cellY-1] + m_Cells[0][cellY+1] + m_Cells[1][cellY-1] + m_Cells[1][cellY] + m_Cells[1][cellY+1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[0][cellY-1] + m_Cells[0][cellY+1] + m_Cells[1][cellY-1] + m_Cells[1][cellY] + m_Cells[1][cellY+1] + m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY] + m_Cells[m_Size-1][cellY+1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[0][cellY-1] + m_Cells[0][cellY+1] + m_Cells[1][cellY-1] + m_Cells[1][cellY] + m_Cells[1][cellY+1];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[0][cellY-1] + m_Cells[0][cellY+1] + m_Cells[1][cellY-1] + m_Cells[1][cellY] + m_Cells[1][cellY+1] + m_Cells[m_Size-1][m_Size-cellY-1] + m_Cells[m_Size-1][m_Size-cellY] + m_Cells[m_Size-1][m_Size-cellY+1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[0][cellY-1] + m_Cells[0][cellY+1] + m_Cells[1][cellY-1] + m_Cells[1][cellY] + m_Cells[1][cellY+1];
-//			}
-//			else{	//	square topology
-//				return m_Cells[0][cellY-1] + m_Cells[0][cellY+1] + m_Cells[1][cellY-1] + m_Cells[1][cellY] + m_Cells[1][cellY+1];
-//			}
-//		}
-//	}
-//	else if (cellX == m_Size-1){
-//		if (cellY == 0){	//	top left
-//			//	check boundary conditions
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[m_Size-1][1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-2][1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[m_Size-1][1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-2][1] + m_Cells[m_Size-1][m_Size-1] + m_Cells[m_Size-2][m_Size-1] + m_Cells[0][0] + m_Cells[0][1] + m_Cells[0][m_Size-1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[m_Size-1][1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-2][1] + m_Cells[m_Size-1][m_Size-1] + m_Cells[m_Size-2][m_Size-1];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[m_Size-1][1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-2][1] + m_Cells[m_Size-1][m_Size-1] + m_Cells[m_Size-2][m_Size-1] + m_Cells[0][0] + m_Cells[0][m_Size-2] + m_Cells[0][m_Size-1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[m_Size-1][1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-2][1] + m_Cells[1][m_Size-1] + m_Cells[0][m_Size-1];
-//			}
-//			else{	//	square topology
-//				return m_Cells[m_Size-1][1] + m_Cells[m_Size-2][0] + m_Cells[m_Size-2][1];
-//			}
-//		}
-//		else if (cellY == m_Size - 1){
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-2][m_Size-2] + m_Cells[m_Size-2][m_Size-1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-2][m_Size-2] + m_Cells[m_Size-2][m_Size-1] + m_Cells[m_Size-1][0] + m_Cells[m_Size-2][0] + m_Cells[0][0] + m_Cells[0][m_Size-2] + m_Cells[0][m_Size-1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-2][m_Size-2] + m_Cells[m_Size-2][m_Size-1] + m_Cells[m_Size-1][0] + m_Cells[m_Size-2][0];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-2][m_Size-2] + m_Cells[m_Size-2][m_Size-1] + m_Cells[m_Size-1][0] + m_Cells[m_Size-2][0] + m_Cells[0][0] + m_Cells[0][1] + m_Cells[0][m_Size-1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-2][m_Size-2] + m_Cells[m_Size-2][m_Size-1] + m_Cells[1][0] + m_Cells[0][0];
-//			}
-//			else{	//	square topology
-//				return m_Cells[m_Size-1][m_Size-2] + m_Cells[m_Size-2][m_Size-2] + m_Cells[m_Size-2][m_Size-1];
-//			}
-//		}
-//		else{
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY+1] + m_Cells[m_Size-2][cellY-1] + m_Cells[m_Size-2][cellY] + m_Cells[m_Size-2][cellY+1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY+1] + m_Cells[m_Size-2][cellY-1] + m_Cells[m_Size-2][cellY] + m_Cells[m_Size-2][cellY+1] + m_Cells[0][cellY-1] + m_Cells[0][cellY] + m_Cells[0][cellY+1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY+1] + m_Cells[m_Size-2][cellY-1] + m_Cells[m_Size-2][cellY] + m_Cells[m_Size-2][cellY+1];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY+1] + m_Cells[m_Size-2][cellY-1] + m_Cells[m_Size-2][cellY] + m_Cells[m_Size-2][cellY+1] + m_Cells[0][m_Size-cellY-1] + m_Cells[0][m_Size-cellY] + m_Cells[0][m_Size-cellY+1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY+1] + m_Cells[m_Size-2][cellY-1] + m_Cells[m_Size-2][cellY] + m_Cells[m_Size-2][cellY+1];
-//			}
-//			else{	//	square topology
-//				return m_Cells[m_Size-1][cellY-1] + m_Cells[m_Size-1][cellY+1] + m_Cells[m_Size-2][cellY-1] + m_Cells[m_Size-2][cellY] + m_Cells[m_Size-2][cellY+1];
-//			}
-//		}
-//	}
-//	else{	//sides
-//		if (cellY == 0){	//	top left
-//			//	check boundary conditions
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[cellX][1] + m_Cells[cellX-1][0] + m_Cells[cellX-1][1] + m_Cells[cellX+1][0] + m_Cells[cellX+1][1];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[cellX][1] + m_Cells[cellX-1][0] + m_Cells[cellX-1][1] + m_Cells[cellX+1][0] + m_Cells[cellX+1][1] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX][m_Size-1];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[cellX][1] + m_Cells[cellX-1][0] + m_Cells[cellX-1][1] + m_Cells[cellX+1][0] + m_Cells[cellX+1][1] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX][m_Size-1];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[cellX][1] + m_Cells[cellX-1][0] + m_Cells[cellX-1][1] + m_Cells[cellX+1][0] + m_Cells[cellX+1][1] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX][m_Size-1];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[cellX][1] + m_Cells[cellX-1][0] + m_Cells[cellX-1][1] + m_Cells[cellX+1][0] + m_Cells[cellX+1][1] + m_Cells[m_Size-cellX-1][m_Size-1] + m_Cells[m_Size-cellX+1][m_Size-1] + m_Cells[m_Size-cellX][m_Size-1];
-//			}
-//			else{	//	square topology
-//				return m_Cells[cellX][1] + m_Cells[cellX-1][0] + m_Cells[cellX-1][1] + m_Cells[cellX+1][0] + m_Cells[cellX+1][1];
-//			}
-//		}
-//		else if (cellY == m_Size - 1){
-//			if (m_Boundary == 0){	//	sphere topology
-//				return m_Cells[cellX][m_Size-2] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX-1][m_Size-2] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX+1][m_Size-2];
-//			}
-//			else if (m_Boundary == 1){	//	torus topology
-//				return m_Cells[cellX][m_Size-2] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX-1][m_Size-2] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX+1][m_Size-2] + m_Cells[cellX-1][0] + m_Cells[cellX][0] + m_Cells[cellX+1][0];
-//			}
-//			else if (m_Boundary == 2){	//	cylinder topology
-//				return m_Cells[cellX][m_Size-2] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX-1][m_Size-2] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX+1][m_Size-2] + m_Cells[cellX-1][0] + m_Cells[cellX][0] + m_Cells[cellX+1][0];
-//			}
-//			else if (m_Boundary == 3){	//	Klein bottle topology
-//				return m_Cells[cellX][m_Size-2] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX-1][m_Size-2] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX+1][m_Size-2] + m_Cells[cellX-1][0] + m_Cells[cellX][0] + m_Cells[cellX+1][0];
-//			}
-//			else if (m_Boundary == 4){	//	Mobius strip topology
-//				return m_Cells[cellX][m_Size-2] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX-1][m_Size-2] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX+1][m_Size-2] + m_Cells[m_Size-cellX-1][0] + m_Cells[m_Size-cellX][0] + m_Cells[m_Size-cellX+1][0];
-//			}
-//			else{	//	square topology
-//				return m_Cells[cellX][m_Size-2] + m_Cells[cellX-1][m_Size-1] + m_Cells[cellX-1][m_Size-2] + m_Cells[cellX+1][m_Size-1] + m_Cells[cellX+1][m_Size-2];
-//			}
-//		}
-//		else{
-//			return m_Cells[cellX][cellY+1] + m_Cells[cellX][cellY-1] + m_Cells[cellX+1][cellY-1] + m_Cells[cellX+1][cellY] + m_Cells[cellX+1][cellY+1] + m_Cells[cellX-1][cellY-1] + m_Cells[cellX-1][cellY] + m_Cells[cellX-1][cellY+1];
-//		}
-//	}
-//}
+int Automata::findTwoDimensionalMooreState_2State2(int cellX, int cellY){
+	int currentCell = m_Cells[cellX][cellY].m_State * 9;
+	//	check for boundary cells
+	if (cellX == 0){	//	top of grid
+		if (cellY == 0){	//	top left
+			//	check boundary conditions
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[0][1].m_State + m_Cells[1][0].m_State + m_Cells[1][1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[0][1].m_State + m_Cells[1][0].m_State + m_Cells[1][1].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-1][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[0][1].m_State + m_Cells[1][0].m_State + m_Cells[1][1].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[1][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[0][1].m_State + m_Cells[1][0].m_State + m_Cells[1][1].m_State + m_Cells[0][m_Size-1].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-1][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[0][1].m_State + m_Cells[1][0].m_State + m_Cells[1][1].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[m_Size-1][m_Size-1].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[0][1].m_State + m_Cells[1][0].m_State + m_Cells[1][1].m_State;
+			}
+		}
+		else if (cellY == m_Size - 1){
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[0][m_Size-2].m_State + m_Cells[1][m_Size-2].m_State + m_Cells[1][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[0][m_Size-2].m_State + m_Cells[1][m_Size-2].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[0][0].m_State + m_Cells[1][0].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-1][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[0][m_Size-2].m_State + m_Cells[1][m_Size-2].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[0][0].m_State + m_Cells[1][0].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[0][m_Size-2].m_State + m_Cells[1][m_Size-2].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[0][0].m_State + m_Cells[1][0].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-1][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[0][m_Size-2].m_State + m_Cells[1][m_Size-2].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-1][0].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[0][m_Size-2].m_State + m_Cells[1][m_Size-2].m_State + m_Cells[1][m_Size-1].m_State;
+			}
+		}
+		else{
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY+1].m_State + m_Cells[1][cellY-1].m_State + m_Cells[1][cellY].m_State + m_Cells[1][cellY+1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY+1].m_State + m_Cells[1][cellY-1].m_State + m_Cells[1][cellY].m_State + m_Cells[1][cellY+1].m_State + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY].m_State + m_Cells[m_Size-1][cellY+1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY+1].m_State + m_Cells[1][cellY-1].m_State + m_Cells[1][cellY].m_State + m_Cells[1][cellY+1].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY+1].m_State + m_Cells[1][cellY-1].m_State + m_Cells[1][cellY].m_State + m_Cells[1][cellY+1].m_State + m_Cells[m_Size-1][m_Size-cellY-1].m_State + m_Cells[m_Size-1][m_Size-cellY].m_State + m_Cells[m_Size-1][m_Size-cellY+1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY+1].m_State + m_Cells[1][cellY-1].m_State + m_Cells[1][cellY].m_State + m_Cells[1][cellY+1].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY+1].m_State + m_Cells[1][cellY-1].m_State + m_Cells[1][cellY].m_State + m_Cells[1][cellY+1].m_State;
+			}
+		}
+	}
+	else if (cellX == m_Size-1){
+		if (cellY == 0){	//	top left
+			//	check boundary conditions
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-2][1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-2][1].m_State + m_Cells[m_Size-1][m_Size-1].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[0][0].m_State + m_Cells[0][1].m_State + m_Cells[0][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-2][1].m_State + m_Cells[m_Size-1][m_Size-1].m_State + m_Cells[m_Size-2][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-2][1].m_State + m_Cells[m_Size-1][m_Size-1].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[0][0].m_State + m_Cells[0][m_Size-2].m_State + m_Cells[0][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-2][1].m_State + m_Cells[1][m_Size-1].m_State + m_Cells[0][m_Size-1].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[m_Size-1][1].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[m_Size-2][1].m_State;
+			}
+		}
+		else if (cellY == m_Size - 1){
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[0][0].m_State + m_Cells[0][m_Size-2].m_State + m_Cells[0][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-2][0].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[m_Size-1][0].m_State + m_Cells[m_Size-2][0].m_State + m_Cells[0][0].m_State + m_Cells[0][1].m_State + m_Cells[0][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-1].m_State + m_Cells[1][0].m_State + m_Cells[0][0].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[m_Size-1][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-2].m_State + m_Cells[m_Size-2][m_Size-1].m_State;
+			}
+		}
+		else{
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY+1].m_State + m_Cells[m_Size-2][cellY-1].m_State + m_Cells[m_Size-2][cellY].m_State + m_Cells[m_Size-2][cellY+1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY+1].m_State + m_Cells[m_Size-2][cellY-1].m_State + m_Cells[m_Size-2][cellY].m_State + m_Cells[m_Size-2][cellY+1].m_State + m_Cells[0][cellY-1].m_State + m_Cells[0][cellY].m_State + m_Cells[0][cellY+1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY+1].m_State + m_Cells[m_Size-2][cellY-1].m_State + m_Cells[m_Size-2][cellY].m_State + m_Cells[m_Size-2][cellY+1].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY+1].m_State + m_Cells[m_Size-2][cellY-1].m_State + m_Cells[m_Size-2][cellY].m_State + m_Cells[m_Size-2][cellY+1].m_State + m_Cells[0][m_Size-cellY-1].m_State + m_Cells[0][m_Size-cellY].m_State + m_Cells[0][m_Size-cellY+1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY+1].m_State + m_Cells[m_Size-2][cellY-1].m_State + m_Cells[m_Size-2][cellY].m_State + m_Cells[m_Size-2][cellY+1].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[m_Size-1][cellY-1].m_State + m_Cells[m_Size-1][cellY+1].m_State + m_Cells[m_Size-2][cellY-1].m_State + m_Cells[m_Size-2][cellY].m_State + m_Cells[m_Size-2][cellY+1].m_State;
+			}
+		}
+	}
+	else{	//sides
+		if (cellY == 0){	//	top left
+			//	check boundary conditions
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[cellX][1].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX-1][1].m_State + m_Cells[cellX+1][0].m_State + m_Cells[cellX+1][1].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[cellX][1].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX-1][1].m_State + m_Cells[cellX+1][0].m_State + m_Cells[cellX+1][1].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[cellX][1].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX-1][1].m_State + m_Cells[cellX+1][0].m_State + m_Cells[cellX+1][1].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[cellX][1].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX-1][1].m_State + m_Cells[cellX+1][0].m_State + m_Cells[cellX+1][1].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX][m_Size-1].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[cellX][1].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX-1][1].m_State + m_Cells[cellX+1][0].m_State + m_Cells[cellX+1][1].m_State + m_Cells[m_Size-cellX-1][m_Size-1].m_State + m_Cells[m_Size-cellX+1][m_Size-1].m_State + m_Cells[m_Size-cellX][m_Size-1].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[cellX][1].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX-1][1].m_State + m_Cells[cellX+1][0].m_State + m_Cells[cellX+1][1].m_State;
+			}
+		}
+		else if (cellY == m_Size - 1){
+			if (m_Boundary == 0){	//	sphere topology
+				return currentCell + m_Cells[cellX][m_Size-2].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX-1][m_Size-2].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-2].m_State;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				return currentCell + m_Cells[cellX][m_Size-2].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX-1][m_Size-2].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-2].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX][0].m_State + m_Cells[cellX+1][0].m_State;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				return currentCell + m_Cells[cellX][m_Size-2].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX-1][m_Size-2].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-2].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX][0].m_State + m_Cells[cellX+1][0].m_State;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				return currentCell + m_Cells[cellX][m_Size-2].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX-1][m_Size-2].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-2].m_State + m_Cells[cellX-1][0].m_State + m_Cells[cellX][0].m_State + m_Cells[cellX+1][0].m_State;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				return currentCell + m_Cells[cellX][m_Size-2].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX-1][m_Size-2].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-2].m_State + m_Cells[m_Size-cellX-1][0].m_State + m_Cells[m_Size-cellX][0].m_State + m_Cells[m_Size-cellX+1][0].m_State;
+			}
+			else{	//	square topology
+				return currentCell + m_Cells[cellX][m_Size-2].m_State + m_Cells[cellX-1][m_Size-1].m_State + m_Cells[cellX-1][m_Size-2].m_State + m_Cells[cellX+1][m_Size-1].m_State + m_Cells[cellX+1][m_Size-2].m_State;
+			}
+		}
+		else{
+			return currentCell + m_Cells[cellX][cellY+1].m_State + m_Cells[cellX][cellY-1].m_State + m_Cells[cellX+1][cellY-1].m_State + m_Cells[cellX+1][cellY].m_State + m_Cells[cellX+1][cellY+1].m_State + m_Cells[cellX-1][cellY-1].m_State + m_Cells[cellX-1][cellY].m_State + m_Cells[cellX-1][cellY+1].m_State;
+		}
+	}
+}
 
 //	updating cells
 void Automata::findOneDimensionalUpdateRule(){
@@ -679,7 +680,19 @@ void Automata::findOneDimensionalUpdateRule_3State2(){
 	m_UpdateRule = newUpdateRules;
 }
 
-void Automata::findTwoDimensionalvonNeumannUpdateRule(){
+void Automata::findTwoDimensionalUpdateRule(){
+	if (m_Type == 0){
+		findTwoDimensionalvonNeumannUpdateRule_2State();
+	}
+	else if (m_Type == 1){
+		findTwoDimensionalvonNeumannUpdateRule_2State2();
+	}
+	else if (m_Type == 2){
+		findTwoDimensionalMooreUpdateRule_2State2();
+	}
+}
+
+void Automata::findTwoDimensionalvonNeumannUpdateRule_2State(){
 	std::vector<int> tempUpdateRule{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	int tempDivisor = m_Rule;
 	for (int i = 31; i >= 0; i--){
@@ -692,10 +705,9 @@ void Automata::findTwoDimensionalvonNeumannUpdateRule(){
 		tempDivisor >>=1;
 	}
 	m_UpdateRule = tempUpdateRule;
-	std::cout << std::endl;
 }
 
-void Automata::findTwoDimensionalvonNeumannUpdateRule2(){
+void Automata::findTwoDimensionalvonNeumannUpdateRule_2State2(){
 	std::vector<int> tempUpdateRule{0,0,0,0,0,0,0,0,0,0};
 	int tempDivisor = m_Rule;
 	for (int i = 9; i >= 0; i--){
@@ -708,8 +720,28 @@ void Automata::findTwoDimensionalvonNeumannUpdateRule2(){
 		tempDivisor >>=1;
 	}
 	m_UpdateRule = tempUpdateRule;
-	std::cout << std::endl;
 }
+
+void Automata::findTwoDimensionalMooreUpdateRule_2State2(){
+	std::vector<int> tempUpdateRule{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	int tempDivisor = m_Rule;
+	for (int i = 17; i >= 0; i--){
+		if (tempDivisor & 1){
+			tempUpdateRule[i] = 1;
+		}
+		else{
+			tempUpdateRule[i] = 0;
+		}
+		tempDivisor >>=1;
+	}
+	std::vector<int> newUpdateRules;
+	for (int i = 17; i >=0; i--){
+		newUpdateRules.push_back(tempUpdateRule[i]);
+	}
+	m_UpdateRule = newUpdateRules;
+}
+
+
 void Automata::updateOneDimensionalCells(){
 	if (m_NumStates == 2){
 		if (m_Type == 0){
@@ -745,7 +777,19 @@ void Automata::updateOneDimensionalCells_3State2(){
 	m_Cells = cellCopy;
 }
 
-void Automata::updateTwoDimensionalvonNeumannCells(){
+void Automata::updateTwoDimensionalCells(){
+	if (m_Type == 0){
+		updateTwoDimensionalvonNeumannCells_2State();
+	}
+	else if (m_Type == 1){
+		updateTwoDimensionalvonNeumannCells_2State2();
+	}
+	else if (m_Type == 2){
+		updateTwoDimensionalMooreCells_2State2();
+	}
+}
+
+void Automata::updateTwoDimensionalvonNeumannCells_2State(){
 	std::vector<std::vector<Cell> > cellCopy = m_Cells;
 	for (int i = 0; i < m_Size; i++){
 		for (int j = 0; j < m_Size; j++){
@@ -758,7 +802,7 @@ void Automata::updateTwoDimensionalvonNeumannCells(){
 	m_Cells = cellCopy;
 }
 
-void Automata::updateTwoDimensionalvonNeumannCells2(){
+void Automata::updateTwoDimensionalvonNeumannCells_2State2(){
 	std::vector<std::vector<Cell> > cellCopy = m_Cells;
 	for (int i = 0; i < m_Size; i++){
 		for (int j = 0; j < m_Size; j++){
@@ -771,9 +815,18 @@ void Automata::updateTwoDimensionalvonNeumannCells2(){
 	m_Cells = cellCopy;
 }
 
-//void Automata::updateTwoDimensionalCells(){
-//
-//}
+void Automata::updateTwoDimensionalMooreCells_2State2(){
+	std::vector<std::vector<Cell> > cellCopy = m_Cells;
+	for (int i = 0; i < m_Size; i++){
+		for (int j = 0; j < m_Size; j++){
+			//std::cout << cellCopy[i][j].m_State <<",";
+			//std::cout << findTwoDimensionalMooreState_2State2(i,j) << ",";
+			//std::cout << m_UpdateRule[findTwoDimensionalMooreState_2State2(i,j)] << std::endl;
+			cellCopy[i][j].m_State = m_UpdateRule[findTwoDimensionalMooreState_2State2(i,j)];
+		}
+	}
+	m_Cells = cellCopy;
+}
 
 
 //	printing
@@ -786,7 +839,7 @@ void Automata::printCells(){
 	}
 }
 
-void Automata::displayOneDimensionalCells(){
+void Automata::displayOneDimensionalCells_2State(){
 //	for (int i = 0; i < 100; i++){
 //			std::cout << std::endl;
 //		}
@@ -802,7 +855,7 @@ void Automata::displayOneDimensionalCells(){
 		std::cout << "|" << std::endl;
 }
 
-void Automata::displayOneDimensionalCells3States2(){
+void Automata::displayOneDimensionalCells_3State(){
 //	for (int i = 0; i < 100; i++){
 //			std::cout << std::endl;
 //		}
@@ -821,7 +874,7 @@ void Automata::displayOneDimensionalCells3States2(){
 		std::cout << "|" << std::endl;
 }
 
-void Automata::displayTwoDimensionalCells(){
+void Automata::displayTwoDimensionalCells_2State(){
 	for (int i = 0; i < 100; i++){
 		std::cout << std::endl;
 	}
@@ -890,7 +943,7 @@ void Automata::initializeOneDimensionalCells(){
 }
 
 void Automata::initializeTwoDimensionalEmptyCells(){
-	findTwoDimensionalvonNeumannUpdateRule();
+	findTwoDimensionalUpdateRule();
 	for (int j = 0; j < m_Size; j++){
 		std::vector<Cell> tempCells;
 		if (m_Type == 2){
@@ -902,7 +955,7 @@ void Automata::initializeTwoDimensionalEmptyCells(){
 	}
 }
 void Automata::initializeTwoDimensionalCells(){
-	findTwoDimensionalvonNeumannUpdateRule();
+	findTwoDimensionalUpdateRule();
 	//	check for existence of type, size, and density
 	if (m_Type == 0){
 		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
@@ -930,30 +983,6 @@ void Automata::initializeTwoDimensionalCells(){
 		}
 	}
 }
-//	initializer with density
-//void Automata::initializeCells(float density){
-//	findUpdateRule();
-//	//	check for existence of type, size
-//	if (m_Type == 0){
-//		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
-//		return;
-//	}
-//	else if (m_Size <= 0){
-//		std::cout << "ERROR! Size of the space should be at least 1! : m_Size = " << m_Size << std::endl;
-//	}
-//	else{
-//		if (m_Type == 1){
-//			for (int i = 0; i < m_Size; i++){
-//				if ((float)rand()/RAND_MAX <= density){
-//					m_Cells[i].m_State = 1;
-//				}
-//				else{
-//					m_Cells[i].m_State = 0;
-//				}
-//			}
-//		}
-//	}
-//}
 
 std::vector <std::vector <int> > Automata::generateOneDimensionalSequence(){
 	if (m_NumStates == 2){
@@ -1032,28 +1061,36 @@ int main(){
 
 	srand(time(NULL));
 
-	//	initial state
-	std::vector<int> initialState;
-	for (int i = 0; i < 51; i++){
-		initialState.push_back(0);
-	}
-	initialState[25] = 1;
-	
-	std::vector<std::vector<int> > initial;
-	initial.push_back(initialState);
-	Automata test(1, 51, 3, 0, 1086, 1, .4, 500);
-	test.initializeOneDimensionalEmptyCells();
-	test.setCells(initial);
-	test.findOneDimensionalUpdateRule();
-	//test.printCells();
-	test.displayOneDimensionalCells();
-	//std::vector <std::vector <int> > sequence = test.generateOneDimensionalSequence3States2();
-	//test.saveSequenceToFile(sequence, "test.csv");
-	for (int i = 0; i < 25; i++){
-		test.updateOneDimensionalCells();
-		test.displayOneDimensionalCells();
-	}
+//	//	initial state
+//	std::vector<int> initialState;
+//	for (int i = 0; i < 51; i++){
+//		initialState.push_back(0);
+//	}
+//	initialState[25] = 1;
+//	
+//	std::vector<std::vector<int> > initial;
+//	initial.push_back(initialState);
+//	Automata test(1, 51, 3, 0, 1086, 1, .4, 500);
+//	test.initializeOneDimensionalEmptyCells();
+//	test.setCells(initial);
+//	test.findOneDimensionalUpdateRule();
+//	//test.printCells();
+//	test.displayOneDimensionalCells_3State();
+//	//std::vector <std::vector <int> > sequence = test.generateOneDimensionalSequence3States2();
+//	//test.saveSequenceToFile(sequence, "test.csv");
+//	for (int i = 0; i < 25; i++){
+//		test.updateOneDimensionalCells();
+//		test.displayOneDimensionalCells_3State();
+//	}
 
+	Automata test(2, 50, 2, 1, 6152, 2, .75, 100);
+	test.initializeTwoDimensionalCells();
+	for (int i = 0; i < 25; i++){
+		test.updateTwoDimensionalCells();
+		usleep(100000);
+		test.displayTwoDimensionalCells_2State();
+	}
+	
 	return 0;
 
 }

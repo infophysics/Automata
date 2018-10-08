@@ -77,22 +77,25 @@ class Automata {
 		void findOneDimensionalUpdateRule_2State();
 		void findOneDimensionalUpdateRule_3State2();
 		
-		void findTwoDimensionalvonNeumannUpdateRule();
-		void findTwoDimensionalvonNeumannUpdateRule2();
-		void findTwoDimensionalMooreUpdateRule2();
+		void findTwoDimensionalUpdateRule();
+		void findTwoDimensionalvonNeumannUpdateRule_2State();
+		void findTwoDimensionalvonNeumannUpdateRule_2State2();
+		void findTwoDimensionalMooreUpdateRule_2State2();
 		
 		void updateOneDimensionalCells();
 		void updateOneDimensionalCells_2State();
 		void updateOneDimensionalCells_3State2();
 		
-		void updateTwoDimensionalvonNeumannCells();
-		void updateTwoDimensionalvonNeumannCells2();
+		void updateTwoDimensionalCells();
+		void updateTwoDimensionalvonNeumannCells_2State();
+		void updateTwoDimensionalvonNeumannCells_2State2();
+		void updateTwoDimensionalMooreCells_2State2();
 
 		//	printing
 		void printCells();
-		void displayOneDimensionalCells();
-		void displayOneDimensionalCells3States2();
-		void displayTwoDimensionalCells();
+		void displayOneDimensionalCells_2State();
+		void displayOneDimensionalCells_3State();
+		void displayTwoDimensionalCells_2State();
 
 		//	initializers
 		void initializeOneDimensionalEmptyCells();
