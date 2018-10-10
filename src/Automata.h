@@ -41,7 +41,7 @@ class Automata {
 		Automata(int dim, int size, int numStates, int boundary, int rule);
 		Automata(int dim, int size, int numStates, int boundary, int rule, int type);
 		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density);
-		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int time);
+		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int times);
 		//	setters
 		void setBoundary(int boundary){m_Boundary = boundary;}
 		void setRule(int rule){m_Rule = rule;}

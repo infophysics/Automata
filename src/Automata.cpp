@@ -10,15 +10,15 @@
 #include <unistd.h>
 
 //	Default constructor
-Automata::Automata() : m_Type(0), m_Size(0), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) {}
+Automata::Automata() : m_Type(0), m_Size(0), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) { srand(time(NULL));}
 Automata::~Automata() {}
 //	Various constructors
-Automata::Automata(int dim, int size, int numStates) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(-1), m_Rule(-1), m_Type(0), m_Density(0), m_Time(0) {}
-Automata::Automata(int dim, int size, int numStates, int boundary) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(-1), m_Type(0), m_Density(0), m_Time(0) {}
-Automata::Automata(int dim, int size, int numStates, int boundary, int rule) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(0), m_Density(0), m_Time(0) {}
-Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(0), m_Time(0) {}
-Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(0) {}
-Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int time) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(time){}
+Automata::Automata(int dim, int size, int numStates) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(-1), m_Rule(-1), m_Type(0), m_Density(0), m_Time(0)  {srand(time(NULL));}
+Automata::Automata(int dim, int size, int numStates, int boundary) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(-1), m_Type(0), m_Density(0), m_Time(0) { srand(time(NULL));}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(0), m_Density(0), m_Time(0) { srand(time(NULL));}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(0), m_Time(0) { srand(time(NULL));}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(0) { srand(time(NULL));}
+Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int times) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(times){ srand(time(NULL));}
 
 //	states
 int Automata::findOneDimensionalState(int cell){
