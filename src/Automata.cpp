@@ -20,6 +20,9 @@ Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int
 Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(0) { srand(time(NULL));}
 Automata::Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int times) : m_Dim(dim), m_Size(size), m_NumStates(numStates), m_Boundary(boundary), m_Rule(rule), m_Type(type), m_Density(density), m_Time(times){ srand(time(NULL));}
 
+
+
+
 //	states
 int Automata::findOneDimensionalState(int cell){
 	//	determine type
@@ -905,7 +908,7 @@ void Automata::setCells(std::vector<std::vector<int> > states){
 void Automata::initializeOneDimensionalEmptyCells(){
 	findOneDimensionalUpdateRule();
 	std::vector<Cell> tempCells;
-	if (m_Type == 1){
+	if (m_Type == 0){
 		for (int i = 0; i < m_Size; i++){
 			tempCells.push_back(Cell(0, m_NumStates));
 		}
