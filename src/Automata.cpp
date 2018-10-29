@@ -1029,7 +1029,7 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence_3State
 std::vector<std::vector <std::vector <int>  > > Automata::generateTwoDimensionalSequence(){
 	if (m_NumStates == 2){
 		return generateTwoDimensionalSequence_2State();
-	}
+}
 }
 
 std::vector<std::vector <std::vector <int>  > > Automata::generateTwoDimensionalSequence_2State(){
@@ -1055,9 +1055,9 @@ void Automata::saveOneDimensionalSequenceToFile(std::vector <std::vector <int> >
 	std::ofstream myfile;
 	myfile.open(fileName);
 	for (int i = 0; i < sequence.size(); i++){
-		for (int j = 0; j < m_Size; j++){
+		for (int j = 0; j < sequence[i].size(); j++){
 			myfile << sequence[i][j];
-			if (j != m_Size - 1){
+			if (j != sequence[i].size() - 1){
 				myfile << ",";
 			}
 		}
