@@ -908,10 +908,8 @@ void Automata::setCells(std::vector<std::vector<int> > states){
 void Automata::initializeOneDimensionalEmptyCells(){
 	findOneDimensionalUpdateRule();
 	std::vector<Cell> tempCells;
-	if (m_Type == 0){
-		for (int i = 0; i < m_Size; i++){
-			tempCells.push_back(Cell(0, m_NumStates));
-		}
+	for (int i = 0; i < m_Size; i++){
+		tempCells.push_back(Cell(0, m_NumStates));
 	}
 	m_Cells.push_back(tempCells);
 }
