@@ -16,6 +16,8 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
+#include <sstream>
+#include <iterator>
 
 //	Cell struct
 struct Cell{

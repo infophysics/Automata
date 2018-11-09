@@ -86,6 +86,7 @@ PYBIND11_MODULE(automata, m) {
   py::class_<Conway, Automata>(m, "Conway")
       .def(py::init<>())
 	  .def(py::init<int, int, float, int>())
+	  .def("generateObject", &Conway::generateObject)
 	  .def("chipSequence", &Conway::chipSequence)
 	  ;  
 }
