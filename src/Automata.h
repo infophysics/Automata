@@ -43,8 +43,12 @@ class Automata {
 		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density);
 		Automata(int dim, int size, int numStates, int boundary, int rule, int type, float density, int times);
 		//	setters
+		void setDim(int dim){m_Dim = dim;}
+		void setSize(int size){m_Size = size;}
+		void setNumStates(int numStates){m_NumStates = numStates;}
 		void setBoundary(int boundary){m_Boundary = boundary;}
 		void setRule(int rule){m_Rule = rule;}
+		void setType(int type){m_Type = type;}
 		void setDensity(float density){m_Density = density;}
 		void setTime(int time){m_Time = time;}
 		//	set cell values

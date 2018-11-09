@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include "Automata.h"
+#include "Conway.h"
 #include <pybind11/stl_bind.h>
 #include <pybind11/stl.h>
 #include <pybind11/functional.h>
@@ -26,8 +27,12 @@ PYBIND11_MODULE(automata, m) {
 	  .def(py::init<int, int, int, int, int, int, float, int>())
 
 	  //	setters
+	  .def("setDim", &Automata::setDim)
+	  .def("setSize", &Automata::setSize)
+	  .def("setNumStates", &Automata::setNumStates)
   	  .def("setBoundary", &Automata::setBoundary)
 	  .def("setRule", &Automata::setRule)
+	  .def("setType", &Automata::setType)
 	  .def("setDensity", &Automata::setDensity)
 	  .def("setTime", &Automata::setTime)
   	  //	set cell values
@@ -81,6 +86,7 @@ PYBIND11_MODULE(automata, m) {
   py::class_<Conway, Automata>(m, "Conway")
       .def(py::init<>())
 	  .def(py::init<int, int, float, int>())
+	  .def("chipSequence", &Conway::chipSequence)
 	  ;  
 }
 

@@ -5,7 +5,7 @@ project(automata)
 set(SOURCE_DIR "src/")
 # Tell CMake that headers are also in SOURCE_DIR
 include_directories(${SOURCE_DIR})
-set(SOURCES "${SOURCE_DIR}/Automata.cpp")
+set(SOURCES "${SOURCE_DIR}/Automata.cpp" "${SOURCE_DIR}/Conway.cpp")
 include_directories("${SOURCE_DIR}/include") 
 
 # Generate Python module
