@@ -62,7 +62,7 @@ PYBIND11_MODULE(automata, m) {
 	  .def("printCells", &Automata::printCells)
 	  .def("displayOneDimensionalCells_2State", &Automata::displayOneDimensionalCells_2State)
 	  .def("displayOneDimensionalCells_3State", &Automata::displayOneDimensionalCells_3State)  
-	.def("displayTwoDimensionalCells_2State", &Automata::displayTwoDimensionalCells_2State)  	  
+	  .def("displayTwoDimensionalCells_2State", &Automata::displayTwoDimensionalCells_2State)  	  
 	  //	initializers
   	  .def("initializeOneDimensionalEmptyCells", &Automata::initializeOneDimensionalEmptyCells)
 	  .def("initializeOneDimensionalCells", &Automata::initializeOneDimensionalCells)
@@ -77,5 +77,10 @@ PYBIND11_MODULE(automata, m) {
   	  .def("saveOneDimensionalSequenceToFile", &Automata::saveOneDimensionalSequenceToFile)
 	  .def("saveTwoDimensionalSequenceToFile", &Automata::saveTwoDimensionalSequenceToFile)
 	  ;  		  		
+  
+  py::class_<Conway, Automata>(m, "Conway")
+      .def(py::init<>())
+	  .def(py::init<int, int, float, int>())
+	  ;  
 }
 
