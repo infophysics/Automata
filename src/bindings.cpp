@@ -36,7 +36,8 @@ PYBIND11_MODULE(automata, m) {
 	  .def("setDensity", &Automata::setDensity)
 	  .def("setTime", &Automata::setTime)
   	  //	set cell values
-	  .def("setCells", &Automata::setCells)
+	  .def("setCells", (void (Automata::*)(std::vector<std::vector<int> >)) &Automata::setCells)
+	  .def("setCells", (void (Automata::*)(std::vector<std::vector<Cell> >)) &Automata::setCells)
   	  //	getters
 	  .def("getBoundary", &Automata::getBoundary)
 	  .def("getRule", &Automata::getRule)
@@ -86,6 +87,7 @@ PYBIND11_MODULE(automata, m) {
   py::class_<Conway, Automata>(m, "Conway")
       .def(py::init<>())
 	  .def(py::init<int, int, float, int>())
+	  .def("placeObject", &Conway::placeObject)
 	  .def("generateObject", &Conway::generateObject)
 	  .def("chipSequence", &Conway::chipSequence)
 	  ;  

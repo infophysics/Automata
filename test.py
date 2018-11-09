@@ -1,27 +1,35 @@
-from automata.automata import Automata, Cell
-from cubicalRipser.cubicalRipser import CubicalRipser2D
+from automata.automata import Automata, Cell, Conway
+import time
+from matplotlib import pyplot as plt
+from matplotlib import animation
 import numpy as np
-import matplotlib.pyplot as plt
-from diphaFormat import convert_csv_to_dipha
 
-initialState = [[0 for i in range(301)]]
-initialState[0][150] = 1
+ca = Conway(10,1,.37,10)
+ca.initializeTwoDimensionalEmptyCells()
+ca.placeObject("xq4_27deee6", 0, 0, True)
+anim = ca.generateTwoDimensionalSequence()
 
-test = Automata(1, 301, 0, 22, .4, 300)
-test.initializeOneDimensionalEmptyCells()
-test.setCells(initialState)
-test.displayOneDimensionalCells()
-sequence = test.generateOneDimensionalSequence()
-test.saveSequenceToFile(sequence, "test2.csv")
+temp_im = np.zeros([len(anim[0]),len(anim[0])])
 
-#   save as binary file for DIPHA
-convert_csv_to_dipha("test2.csv","test2.complex")
+def init():
+    global fig, ax, im
+    fig = plt.figure()
+    ax = plt.axes()
+    im = ax.imshow(temp_im,interpolation='nearest',animated=True,vmin=-0.2,vmax=0.2)
+    im.set_data(temp_im)
+    return
 
-#   run cubical ripser
-ripser = CubicalRipser2D()
-ripser.ComputeBarcode("test2.complex", "output.csv", "DIPHA", "COMPUTEPAIRS", 99999, True)
+def animate(i):
+    temp_im = anim[i]
+    im.set_data(temp_im)
+    return
+    
+init()
+animate = animation.FuncAnimation(fig, animate,frames=len(anim))
+animate.save('anim_conway.mp4',extra_args=['-vcodec','libx264'])
+fig.show() 
 
-plt.figure(figsize = (10,10))
-plt.imshow(sequence, interpolation='nearest')
-plt.show()
+#chip = ca.chipSequence(sequence, 5, 5, 2, 3)
+
+
 

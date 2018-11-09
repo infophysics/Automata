@@ -55,11 +55,14 @@ class Automata {
 		void setTime(int time){m_Time = time;}
 		//	set cell values
 		void setCells(std::vector<std::vector<int> > states);
+		void setCells(std::vector<std::vector<Cell> > cells){m_Cells = cells;}
 		//	getters
 		int getBoundary(){return m_Boundary;}
 		int getRule(){return m_Rule;}
 		float getDensity(){return m_Density;}
 		int getTime(){return m_Time;}
+		int getSize(){return m_Size;}
+		std::vector <std::vector < Cell > > getCells(){return m_Cells;}
 
 		//	states
 		int findOneDimensionalState(int cell);

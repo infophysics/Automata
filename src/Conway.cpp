@@ -19,8 +19,30 @@ Conway::Conway(int size, int boundary, float density, int times){
 }
 
 //	place a CA object at location (x,y) according to the apgcode format
-void Conway::placeObject(std::string apgcode, int x, int y){
+void Conway::placeObject(std::string apgcode, int x, int y, bool opaque){
+	std::vector <std::vector < Cell > > temp_Cells = getCells();
 	std::vector<std::vector<int> > temp_object = generateObject(apgcode);
+	int height = temp_object.size();
+	int width = temp_object[0].size();
+	if (getSize() < x + width || getSize() < y + height){
+		std::cout << "ERROR! Object of size " << height << "x" << width << " will not fit in grid!" << std::endl;
+		return;
+	}
+	else{
+		for (int i = 0; i < height; i++){
+			for (int j = 0; j < width; j++){
+				if (!opaque){
+					temp_Cells[i+x][j+y].m_State = temp_object[i][j];
+				}
+				else{
+					if (temp_object[i][j] == 1){
+						temp_Cells[i+x][j+y].m_State = 1;
+					}
+				}
+			}
+		}
+	}
+	setCells(temp_Cells);
 }
 
 std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
