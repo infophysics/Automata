@@ -18,6 +18,17 @@ Conway::Conway(int size, int boundary, float density, int times){
 	srand(time(NULL));
 }
 
+Conway::Conway(std::string rulestring, int size, int boundary, float density, int times){
+	setDim(2);
+	setSize(size);
+	setBoundary(boundary);
+	setType(2);
+	setDensity(density);
+	setTime(times);
+	srand(time(NULL));
+	findTwoDimensionalMooreUpdateRule_NState2(rulestring);
+}
+
 //	place a CA object at location (x,y) according to the apgcode format
 void Conway::placeObject(std::string apgcode, int x, int y, bool opaque){
 	std::vector <std::vector < Cell > > temp_Cells = getCells();

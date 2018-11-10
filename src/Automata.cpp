@@ -630,6 +630,427 @@ int Automata::findTwoDimensionalMooreState_2State2(int cellX, int cellY){
 	}
 }
 
+int Automata::findTwoDimensionalMooreState_NState2(int cellX, int cellY){
+	int currentCell = m_Cells[cellX][cellY].m_State * 9;
+	int numLive = 0;
+	//	check for boundary cells
+	if (cellX == 0){	//	top of grid
+		if (cellY == 0){	//	top left
+			//	check boundary conditions
+			if (m_Boundary == 0){
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;;
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][1].m_State == 1) numLive +=1;
+			}
+		}
+		else if (cellY == m_Size - 1){
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+			}
+		}
+		else{
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY+1].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[1][cellY+1].m_State == 1) numLive +=1;
+			}
+		}
+	}
+	else if (cellX == m_Size-1){
+		if (cellY == 0){	//	top left
+			//	check boundary conditions
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology == 1) numLive +=1;
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topologyv
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][1].m_State == 1) numLive +=1;
+				if (m_Cells[1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[m_Size-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][1].m_State == 1) numLive +=1;
+			}
+		}
+		else if (cellY == m_Size - 1){
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State  == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State  == 1) numLive +=1;
+				if (m_Cells[1][0].m_State == 1) numLive +=1;
+				if (m_Cells[0][0].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[m_Size-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-2].m_State  == 1) numLive +=1;
+				if (m_Cells[m_Size-2][m_Size-1].m_State == 1) numLive +=1;
+			}
+		}
+		else{
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[0][cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-cellY].m_State == 1) numLive +=1;
+				if (m_Cells[0][m_Size-cellY+1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY+1].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[m_Size-1][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-1][cellY+1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-2][cellY+1].m_State == 1) numLive +=1;
+			}
+		}
+	}
+	else{	//sides
+		if (cellY == 0){	//	top left
+			//	check boundary conditions
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[cellX][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[cellX][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[cellX][1].m_State  == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[cellX][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[cellX][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-cellX][m_Size-1].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[cellX][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][1].m_State == 1) numLive +=1;
+			}
+		}
+		else if (cellY == m_Size - 1){
+			if (m_Boundary == 0){	//	sphere topology
+				if (m_Cells[cellX][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-2].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 1){	//	torus topology
+				if (m_Cells[cellX][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 2){	//	cylinder topology
+				if (m_Cells[cellX][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 3){	//	Klein bottle topology
+				if (m_Cells[cellX][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX][0].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][0].m_State == 1) numLive +=1;
+			}
+			else if (m_Boundary == 4){	//	Mobius strip topology
+				if (m_Cells[cellX][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-cellX-1][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-cellX][0].m_State == 1) numLive +=1;
+				if (m_Cells[m_Size-cellX+1][0].m_State == 1) numLive +=1;
+			}
+			else{	//	square topology
+				if (m_Cells[cellX][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX-1][m_Size-2].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-1].m_State == 1) numLive +=1;
+				if (m_Cells[cellX+1][m_Size-2].m_State == 1) numLive +=1;
+			}
+		}
+		else{
+			if (m_Cells[cellX][cellY+1].m_State == 1) numLive +=1;
+			if (m_Cells[cellX][cellY-1].m_State == 1) numLive +=1;
+			if (m_Cells[cellX+1][cellY-1].m_State == 1) numLive +=1;
+			if (m_Cells[cellX+1][cellY].m_State == 1) numLive +=1;
+			if (m_Cells[cellX+1][cellY+1].m_State == 1) numLive +=1;
+			if (m_Cells[cellX-1][cellY-1].m_State == 1) numLive +=1;
+			if (m_Cells[cellX-1][cellY].m_State == 1) numLive +=1;
+			if (m_Cells[cellX-1][cellY+1].m_State == 1) numLive +=1;
+		}
+	}
+	return currentCell + numLive;
+}
 //	updating cells
 void Automata::findOneDimensionalUpdateRule(){
 	//	check for num states
@@ -744,6 +1165,39 @@ void Automata::findTwoDimensionalMooreUpdateRule_2State2(){
 	m_UpdateRule = newUpdateRules;
 }
 
+void Automata::findTwoDimensionalMooreUpdateRule_NState2(std::string rule){
+	//	This should be in B/S/n format
+	std::vector<std::string> results;
+	for (int i = 0; i < rule.size(); i++){
+		std::stringstream ss;
+		std::string s;
+		ss << rule[i];
+		ss >> s;
+		results.push_back(s);
+	}
+	m_Rule = 0;
+	//	Find B and S values
+	std::string N;
+	for (int i = 0; i < results.size(); i++){
+		if (results[i] == "B"){
+			while (results[i+1] != "/"){
+				m_Rule += pow(2, atoi(results[i+1].c_str()));
+				i++;
+			}
+		}
+		else if (results[i] == "S"){
+			while (results[i+1] != "/"){
+				m_Rule += pow(2, (atoi(results[i+1].c_str()) + 9));
+				i++;
+			}
+		}
+		else if (results[i]=="/"){}
+		else{
+			N += results[i];
+		}
+	}
+	m_NumStates = atoi(N.c_str());	
+}
 
 void Automata::updateOneDimensionalCells(){
 	if (m_NumStates == 2){
@@ -781,14 +1235,19 @@ void Automata::updateOneDimensionalCells_3State2(){
 }
 
 void Automata::updateTwoDimensionalCells(){
-	if (m_Type == 0){
-		updateTwoDimensionalvonNeumannCells_2State();
+	if (m_NumStates == 2){
+		if (m_Type == 0){
+			updateTwoDimensionalvonNeumannCells_2State();
+		}
+		else if (m_Type == 1){
+			updateTwoDimensionalvonNeumannCells_2State2();
+		}
+		else if (m_Type == 2){
+			updateTwoDimensionalMooreCells_2State2();
+		}
 	}
-	else if (m_Type == 1){
-		updateTwoDimensionalvonNeumannCells_2State2();
-	}
-	else if (m_Type == 2){
-		updateTwoDimensionalMooreCells_2State2();
+	else{
+		updateTwoDimensionalMooreCells_NState2();
 	}
 }
 
@@ -830,7 +1289,29 @@ void Automata::updateTwoDimensionalMooreCells_2State2(){
 	}
 	m_Cells = cellCopy;
 }
-
+void Automata::updateTwoDimensionalMooreCells_NState2(){
+	std::vector<std::vector<Cell> > cellCopy = m_Cells;
+	for (int i = 0; i < m_Size; i++){
+		for (int j = 0; j < m_Size; j++){
+			//std::cout << cellCopy[i][j].m_State <<",";
+			//std::cout << findTwoDimensionalMooreState_2State2(i,j) << ",";
+			//std::cout << m_UpdateRule[findTwoDimensionalMooreState_2State2(i,j)] << std::endl;
+			int rule =  m_UpdateRule[findTwoDimensionalMooreState_NState2(i,j)];
+			if (cellCopy[i][j].m_State == 0){
+				if (rule == 1) cellCopy[i][j].m_State = 1;
+			}
+			else if (cellCopy[i][j].m_State == 1){
+				if (rule == 1){}
+				else cellCopy[i][j].m_State += 1;
+			}
+			else{
+				if (cellCopy[i][j].m_State == m_NumStates - 1) cellCopy[i][j].m_State = 0;
+				else cellCopy[i][j].m_State += 1;
+			}
+		}
+	}
+	m_Cells = cellCopy;
+}
 
 //	printing
 void Automata::printCells(){
@@ -958,7 +1439,7 @@ void Automata::initializeTwoDimensionalEmptyCells(){
 void Automata::initializeTwoDimensionalCells(){
 	findTwoDimensionalUpdateRule();
 	//	check for existence of type, size, and density
-	if (m_Type == 0){
+	if (m_Dim == 0){
 		std::cout << "ERROR! Dimension of manifold must be 1 or 2 dimensional! : m_Type = " << m_Type << std::endl;
 		return;
 	}
@@ -1027,10 +1508,9 @@ std::vector <std::vector <int> > Automata::generateOneDimensionalSequence_3State
 }
 
 std::vector<std::vector <std::vector <int>  > > Automata::generateTwoDimensionalSequence(){
-	if (m_NumStates == 2){
 		return generateTwoDimensionalSequence_2State();
 }
-}
+
 
 std::vector<std::vector <std::vector <int>  > > Automata::generateTwoDimensionalSequence_2State(){
 	//	check for necessary conditions

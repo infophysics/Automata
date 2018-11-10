@@ -50,6 +50,7 @@ PYBIND11_MODULE(automata, m) {
 	  .def("findOneDimensionalState_3State2", &Automata::findOneDimensionalState_3State2)
 	  .def("findTwoDimensionalvonNeumannState_2State", &Automata::findTwoDimensionalvonNeumannState_2State)
 	  .def("findTwoDimensionalvonNeumannState_2State2", &Automata::findTwoDimensionalvonNeumannState_2State2)
+
 	  //.def("findTwoDimensionalMooreState2", &Automata::findTwoDimensionalMooreState2)
 	  //	updating cells
   	  .def("findOneDimensionalUpdateRule", &Automata::findOneDimensionalUpdateRule)
@@ -87,6 +88,7 @@ PYBIND11_MODULE(automata, m) {
   py::class_<Conway, Automata>(m, "Conway")
       .def(py::init<>())
 	  .def(py::init<int, int, float, int>())
+	  .def(py::init<std::string, int, int, float, int>())
 	  .def("placeObject", &Conway::placeObject)
 	  .def("generateObject", &Conway::generateObject)
 	  .def("chipSequence", &Conway::chipSequence)

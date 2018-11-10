@@ -10,6 +10,7 @@ class Conway : public Automata{
 		Conway();
 		virtual ~Conway();
 		Conway(int size, int boundary, float density, int times);
+		Conway(std::string rulestring, int size, int boundary, float density, int times);
 		
 		//	place a CA object at location (x,y) according to the apgcode format
 		void placeObject(std::string apgcode, int x, int y, bool opaque);

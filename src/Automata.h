@@ -80,6 +80,7 @@ class Automata {
 		//	state determination (type 2)
 		int findTwoDimensionalvonNeumannState_2State2(int cellX, int cellY);
 		int findTwoDimensionalMooreState_2State2(int cellX, int cellY);
+		int findTwoDimensionalMooreState_NState2(int cellX, int cellY);
 		
 		//	updating cells
 		void findOneDimensionalUpdateRule();
@@ -90,6 +91,7 @@ class Automata {
 		void findTwoDimensionalvonNeumannUpdateRule_2State();
 		void findTwoDimensionalvonNeumannUpdateRule_2State2();
 		void findTwoDimensionalMooreUpdateRule_2State2();
+		void findTwoDimensionalMooreUpdateRule_NState2(std::string rule);
 		
 		void updateOneDimensionalCells();
 		void updateOneDimensionalCells_2State();
@@ -99,6 +101,7 @@ class Automata {
 		void updateTwoDimensionalvonNeumannCells_2State();
 		void updateTwoDimensionalvonNeumannCells_2State2();
 		void updateTwoDimensionalMooreCells_2State2();
+		void updateTwoDimensionalMooreCells_NState2();
 
 		//	printing
 		void printCells();
