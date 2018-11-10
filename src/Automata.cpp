@@ -1563,6 +1563,18 @@ void Automata::saveTwoDimensionalSequenceToFile(std::vector <std::vector <std::v
 	myfile.close();
 }
 
+std::vector<std::vector<int> > Automata::getState(){
+	std::vector<std::vector<int> > state;
+	for (int i = 0; i < m_Cells.size(); i++){
+		std::vector<int> row;
+		for (int j = 0; j < m_Cells[i].size(); j++){
+			row.push_back(m_Cells[i][j].m_State);
+		}
+		state.push_back(row);
+	}
+	return state;
+}
+
 int main(){
 
 	srand(time(NULL));

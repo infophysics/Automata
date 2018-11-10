@@ -43,6 +43,8 @@ PYBIND11_MODULE(automata, m) {
 	  .def("getRule", &Automata::getRule)
 	  .def("getDensity", &Automata::getDensity)
 	  .def("getTime", &Automata::getTime)
+	  .def("getCells", &Automata::getCells)
+	  .def("getState", &Automata::getState)
   	  //	state determination
   	  .def("findOneDimensionalState", &Automata::findOneDimensionalState)
 	  .def("findOneDimensionalState_2State", &Automata::findOneDimensionalState_2State)

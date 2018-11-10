@@ -63,6 +63,7 @@ class Automata {
 		int getTime(){return m_Time;}
 		int getSize(){return m_Size;}
 		std::vector <std::vector < Cell > > getCells(){return m_Cells;}
+		std::vector<std::vector<int> > getState();
 
 		//	states
 		int findOneDimensionalState(int cell);
