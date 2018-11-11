@@ -142,7 +142,7 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 				break;
 			}
 		}
-		num_rows.push_back(num_rows_2);
+		if (m == num_states - 1) num_rows.push_back(num_rows_2);
 		if (num_z_2 > num_z) num_z = num_z_2;
 	}
 	int iter = begin;
@@ -225,7 +225,6 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 			if (temp_max > max) max = temp_max;
 		}		
 	}
-	
 	int num_x = 5 + num_z*5;
 	int num_y = max;
 	for (int i = 0; i < num_x; i++){
