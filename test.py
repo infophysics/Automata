@@ -4,9 +4,9 @@ from matplotlib import pyplot as plt
 from matplotlib import animation
 import numpy as np
 
-ca = Conway(10,1,.37,10)
+ca = Conway(25,1,.37,10)
 ca.initializeTwoDimensionalEmptyCells()
-ca.placeObject("xq4_27deee6", 0, 0, True)
+ca.placeObject("xp4_8eh5e0e5he8gz178a707a871", 5, 5, True)
 anim = ca.generateTwoDimensionalSequence()
 
 temp_im = np.zeros([len(anim[0]),len(anim[0])])
@@ -23,13 +23,10 @@ def animate(i):
     temp_im = anim[i]
     im.set_data(temp_im)
     return
-    
+
 init()
 animate = animation.FuncAnimation(fig, animate,frames=len(anim))
 animate.save('anim_conway.mp4',extra_args=['-vcodec','libx264'])
-fig.show() 
+fig.show()
 
 #chip = ca.chipSequence(sequence, 5, 5, 2, 3)
-
-
-

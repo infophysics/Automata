@@ -72,6 +72,7 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 		ss >> s;
 		results.push_back(s);
 	}
+
 	std::vector<std::vector<std::vector<std::string> > > cont_rows_2;
 	int num_states = 0;
 	int type = 0;	//	either xs for still life, xp for oscillator, sq for spaceship, methuselah for methuselah.
@@ -99,6 +100,7 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 		}
 		dig = std::atoi(digits.c_str());
 	}
+
 	else if (results[0] == "m" && results[1] == "e" && results[2] == "t" && results[3] == "h" && results[4] == "u" && results[5] == "s" && results[6] == "e" && results[7] == "l" && results[8] == "a" && results[9] == "h"){
 		type = 3;
 		for (int i = 10; i < results.size(); i++){
@@ -112,6 +114,7 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 		}
 		dig = std::atoi(digits.c_str());
 	}
+
 	//	find number of "_"
 	for (int i = 0; i < results.size(); i++){
 		if (results[i] == "_"){
@@ -145,6 +148,7 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 		if (m == num_states - 1) num_rows.push_back(num_rows_2);
 		if (num_z_2 > num_z) num_z = num_z_2;
 	}
+
 	int iter = begin;
 	for (int m = 0; m < num_states; m++){
 		std::vector<std::vector<std::string> > temp_state;
@@ -170,8 +174,9 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 				break;
 			}
 		}
-		//cont_rows_2.push_back(temp_state);
+		cont_rows_2.push_back(temp_state);
 	}
+
 	int max = 0;
 	for (int m = 0; m < num_states; m++){
 		std::vector<std::vector<std::string> > cont_rows = cont_rows_2[m];
@@ -225,6 +230,7 @@ std::vector<std::vector<int> > Conway::generateObject(std::string apgcode){
 			if (temp_max > max) max = temp_max;
 		}		
 	}
+
 	int num_x = 5 + num_z*5;
 	int num_y = max;
 	for (int i = 0; i < num_x; i++){
