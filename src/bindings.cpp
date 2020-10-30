@@ -18,8 +18,8 @@ PYBIND11_MODULE(automata, m) {
 		;
 
   //	Bindings for connected components functions
-  m.def("connected_components", (std::vector<int> (*)(std::vector<int>,int,int)) &ConnectedComponents)
-  m.def("connected_components", (int* (*)(int*,int,int)) &ConnectedComponents)
+  m.def("connected_components", (std::vector<int> (*)(std::vector<int>,int,int)) &ConnectedComponents);
+  m.def("connected_components", (int* (*)(int*,int,int)) &ConnectedComponents);
 
   //	Binding for the Automata class
   py::class_<Automata>(m, "Automata")
