@@ -9,6 +9,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
+std::vector<int> ConnectedComponents(std::vector<int> array, int width, int height)
+{std::vector<int> vec;
+return vec;}
+
+int* ConnectedComponents(int* array, int width, int height)
+{int* x;
+return x;}
+
+
 //	Default constructor
 Automata::Automata() : m_Type(0), m_Size(0), m_Boundary(-1), m_Rule(-1), m_Density(0), m_Time(0) { srand(time(NULL));}
 Automata::~Automata() {}
