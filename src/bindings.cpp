@@ -16,6 +16,11 @@ PYBIND11_MODULE(automata, m) {
 		.def_readwrite("m_State", &Cell::m_State)
 		.def_readwrite("m_NumStates", &Cell::m_NumStates)
 		;
+
+  //	Bindings for connected components functions
+  m.def("connected_components", (std::vector<int> (*)(std::vector<int>,int,int)) &ConnectedComponents)
+  m.def("connected_components", (int* (*)(int*,int,int)) &ConnectedComponents)
+
   //	Binding for the Automata class
   py::class_<Automata>(m, "Automata")
   	  .def(py::init<>())
