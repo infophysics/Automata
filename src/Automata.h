@@ -34,15 +34,9 @@ struct Cell{
 //-------------------------------------------------------------------
 //	Connected component routines which will be filled in by 
 //	Robert Cardona
-std::vector<int> ConnectedComponents(std::vector<int> array, int width, int height)
-{
+std::vector<int> ConnectedComponents(std::vector<int> array, int width, int height);
 
-}
-
-int* ConnectedComponents(int* array, int width, int height)
-{
-	
-}
+int* ConnectedComponents(int* array, int width, int height);
 //-------------------------------------------------------------------
 
 
