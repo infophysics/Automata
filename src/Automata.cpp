@@ -9,13 +9,41 @@
 #include <stdio.h>
 #include <unistd.h>
 
-std::vector<int> ConnectedComponents(std::vector<int> array, int width, int height)
-{std::vector<int> vec;
-return vec;}
+// direction vectors
+const int dx[] = {+1, 0, -1, 0};
+const int dy[] = {0, +1, 0, -1};
 
-int* ConnectedComponents(int* array, int width, int height)
-{int* x;
-return x;}
+void dfs(std::vector<int> array, std::vector<int> &label, int x, int y, int width, int height, int current_label) {
+  if (x < 0 || x == height) return; // out of bounds
+  if (y < 0 || y == width) return; // out of bounds
+  if (label[x * width + y] || !array[x * width + y]) return; // already labeled or not marked with 1 in m
+  // mark the current cell
+  label[x * width + y] = current_label;
+  // recursively mark the neighbors
+  for (int direction = 0; direction < 4; ++direction)
+    dfs(array, label, x + dx[direction], y + dy[direction], width, height, current_label);
+}
+
+std::vector<int> ConnectedComponents(std::vector<int> array, int width, int height) {
+	// 0 unlabeled
+	std::vector<int> label(width * height, 0);
+
+	int component_counter = 0;
+
+	for (int i = 0; i < height; ++i)
+    for (int j = 0; j < width; ++j)
+      if (!label[i * width + j] && array[i * width + j]) {
+				dfs(array, label, i, j, width, height, ++component_counter);
+			}
+
+	std::cout << component_counter << '\n';
+	return label;
+}
+
+int* ConnectedComponents(int* array, int width, int height) {
+	int* x;
+	return x;
+}
 
 
 //	Default constructor
@@ -304,7 +332,7 @@ int Automata::findTwoDimensionalvonNeumannState_2State(int cellX, int cellY){
 			tempState[2] = m_Cells[0][cellY].m_State;
 			tempState[3] = m_Cells[cellX][cellY-1].m_State;
 			tempState[4] = m_Cells[cellX][cellY+1].m_State;
-		}		
+		}
 	}
 	else{
 		if (cellY == 0){	// middle left
@@ -420,7 +448,7 @@ int Automata::findTwoDimensionalvonNeumannState_2State2(int cellX, int cellY){
 			tempState[2] = m_Cells[0][cellY].m_State;
 			tempState[3] = m_Cells[cellX][cellY-1].m_State;
 			tempState[4] = m_Cells[cellX][cellY+1].m_State;
-		}		
+		}
 	}
 	else{
 		if (cellY == 0){	// middle left
@@ -1098,10 +1126,10 @@ void Automata::findOneDimensionalUpdateRule_3State2(){
 	for (int i = 6; i >=0; i--){
 		if (tempDivisor % 3 != 0){
 			tempUpdateRules[i] = (tempDivisor % 3);
-			
+
 		}
 		else{
-			
+
 			tempUpdateRules[i] = 0;
 		}
 		tempDivisor /= 3;
@@ -1205,7 +1233,7 @@ void Automata::findTwoDimensionalMooreUpdateRule_NState2(std::string rule){
 			N += results[i];
 		}
 	}
-	m_NumStates = atoi(N.c_str());	
+	m_NumStates = atoi(N.c_str());
 }
 
 void Automata::updateOneDimensionalCells(){
@@ -1405,7 +1433,7 @@ void Automata::initializeOneDimensionalEmptyCells(){
 }
 
 void Automata::initializeOneDimensionalCells(){
-	
+
 	findOneDimensionalUpdateRule();
 	//	check for existence of dimension, type, size, and density
 	if (m_Dim == 0){
@@ -1594,7 +1622,7 @@ int main(){
 //		initialState.push_back(0);
 //	}
 //	initialState[25] = 1;
-//	
+//
 //	std::vector<std::vector<int> > initial;
 //	initial.push_back(initialState);
 //	Automata test(1, 51, 3, 0, 1086, 1, .4, 500);
@@ -1610,14 +1638,31 @@ int main(){
 //		test.displayOneDimensionalCells_3State();
 //	}
 
-	Automata test(2, 50, 2, 1, 6152, 2, .75, 100);
-	test.initializeTwoDimensionalCells();
-	for (int i = 0; i < 25; i++){
-		test.updateTwoDimensionalCells();
-		usleep(100000);
-		test.displayTwoDimensionalCells_2State();
-	}
-	
+	// Automata test(2, 50, 2, 1, 6152, 2, .75, 100);
+	// test.initializeTwoDimensionalCells();
+	// for (int i = 0; i < 25; i++){
+	// 	test.updateTwoDimensionalCells();
+	// 	usleep(100000);
+	// 	test.displayTwoDimensionalCells_2State();
+	// }
+	// 
+	// int width = 36;
+	// int height = 54;
+	//
+	// std::vector<int> label = ConnectedComponents(array, width, height);
+	//
+	// int column_counter = 1;
+	//
+	// for(int n : label) {
+	// 	if (column_counter % width == 0){
+	// 		std::cout << n << '\n';
+	// 		// std::cout << "HERE";
+	// 	} else {
+	// 		std::cout << n;
+	// 	}
+	// 	column_counter++;
+	// }
+
 	return 0;
 
 }
