@@ -7,6 +7,9 @@
 
 #pragma once
 
+// #include "Set.h"
+#include "Set.cpp"
+
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +35,7 @@ struct Cell{
 };
 
 //-------------------------------------------------------------------
-//	Connected component routines which will be filled in by 
+//	Connected component routines which will be filled in by
 //	Robert Cardona
 std::vector<int> ConnectedComponents(std::vector<int> array, int width, int height);
 
@@ -80,7 +83,7 @@ class Automata {
 		//	state determination (type 2)
 		int findOneDimensionalState_2State2(int cell);
 		int findOneDimensionalState_3State2(int cell);
-		
+
 		//	two dimensional states
 		int findTwoDimensionalState(int cellX, int cellY);
 		//	state determination (type 1)
@@ -90,22 +93,22 @@ class Automata {
 		int findTwoDimensionalvonNeumannState_2State2(int cellX, int cellY);
 		int findTwoDimensionalMooreState_2State2(int cellX, int cellY);
 		int findTwoDimensionalMooreState_NState2(int cellX, int cellY);
-		
+
 		//	updating cells
 		void findOneDimensionalUpdateRule();
 		void findOneDimensionalUpdateRule_2State();
 		void findOneDimensionalUpdateRule_3State2();
-		
+
 		void findTwoDimensionalUpdateRule();
 		void findTwoDimensionalvonNeumannUpdateRule_2State();
 		void findTwoDimensionalvonNeumannUpdateRule_2State2();
 		void findTwoDimensionalMooreUpdateRule_2State2();
 		void findTwoDimensionalMooreUpdateRule_NState2(std::string rule);
-		
+
 		void updateOneDimensionalCells();
 		void updateOneDimensionalCells_2State();
 		void updateOneDimensionalCells_3State2();
-		
+
 		void updateTwoDimensionalCells();
 		void updateTwoDimensionalvonNeumannCells_2State();
 		void updateTwoDimensionalvonNeumannCells_2State2();
@@ -130,7 +133,7 @@ class Automata {
 		std::vector <std::vector <int> > generateOneDimensionalSequence_2State();
 		std::vector <std::vector <int> > generateOneDimensionalSequence_3State2();
 		//std::vector <std::vector <int> > generateSequence(int time);
-		
+
 		std::vector<std::vector <std::vector <int>  > > generateTwoDimensionalSequence();
 		std::vector<std::vector <std::vector <int>  > > generateTwoDimensionalSequence_2State();
 		//	save sequence to file
@@ -155,5 +158,3 @@ class Automata {
 
 
 };
-
-
